@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grab &amp; Go — Full UI Map — Divyambari Saxena</title>
+  <meta name="description" content="The complete screen-by-screen UI map and high-fidelity annotated screens for Grab & Go — onboarding to invoice, with design rationale.">
+
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231F4A3B'/%3E%3Ctext x='16' y='22' font-family='Manrope,sans-serif' font-size='17' font-weight='600' fill='%23F0E8D8' text-anchor='middle'%3EDS%3C/text%3E%3C/svg%3E">
+
+  <style>
+    .uimap-back {
+      display: inline-flex; align-items: center; gap: var(--sp-2);
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.02em;
+      color: var(--ink-muted); text-decoration: none;
+      transition: color 160ms ease;
+    }
+    .uimap-back:hover { color: var(--forest); }
+
+    .uimap-head { padding: var(--sp-9) 0 var(--sp-7); }
+    .uimap-head .cs-eyebrow { margin-top: var(--sp-6); }
+    .uimap-head h1 { font-size: clamp(34px, 4.6vw, 52px); letter-spacing: -0.03em; margin: var(--sp-4) 0 var(--sp-5); max-width: 900px; }
+    .uimap-head .lede {
+      font-size: clamp(18px, 1.8vw, 21px); line-height: 1.5;
+      color: var(--ink-muted); max-width: 680px; margin: 0;
+    }
+
+    .uimap-figure { margin: 0 0 var(--sp-10); }
+    .uimap-figure .fig-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--sp-3); margin-bottom: var(--sp-5);
+      padding-bottom: var(--sp-4); border-bottom: 1px solid var(--rule);
+    }
+    .uimap-figure .fig-head h2 { font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.022em; margin: 0; }
+    .uimap-figure .fig-head .num { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--forest); }
+    .uimap-figure .frame {
+      display: block; border: 1px solid var(--rule); border-radius: 10px;
+      overflow: hidden; background: var(--surface);
+      box-shadow: 0 4px 20px rgba(26,24,21,0.10);
+    }
+    .uimap-figure .frame img { width: 100%; height: auto; display: block; }
+    .uimap-figure figcaption {
+      font-family: var(--font-mono); font-size: 13px; line-height: 1.55;
+      color: var(--ink-muted); margin-top: var(--sp-4); max-width: 820px;
+    }
+    .uimap-figure .zoom {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.03em;
+      color: var(--forest); text-decoration: none; margin-top: var(--sp-3);
+      border-bottom: 1px solid transparent; transition: border-color 160ms ease;
+    }
+    .uimap-figure .zoom:hover { border-color: var(--forest); }
+
+    .uimap-foot {
+      padding: var(--sp-8) 0; border-top: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--sp-4);
+    }
+    .uimap-foot .next {
+      font-family: var(--font-mono); font-size: 13px; color: var(--ink-muted);
+    }
+
+    /* Long page, two very tall images: only paint the second when scrolled near */
+    .defer { content-visibility: auto; contain-intrinsic-size: auto 1200px; }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Divyambari Saxena</a>
+      <div class="nav-links">
+        <a href="../index.html" class="active">Work</a>
+        <a href="../about.html">About</a>
+        <a href="../resume.html">Résumé</a>
+        <a href="../contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="uimap-head">
+    <div class="container">
+      <a href="grab-and-go.html" class="uimap-back">← Back to Grab &amp; Go</a>
+      <div class="cs-eyebrow">Grab &amp; Go <span class="sep">·</span> Appendix <span class="sep">·</span> System maps</div>
+      <h1>Grab &amp; Go: Full UI Map</h1>
+      <p class="lede">The complete screen-by-screen flow and the high-fidelity, annotated screens refined through user testing.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+
+        <figure class="uimap-figure">
+          <div class="fig-head">
+            <h2>UI Mapping: full flow</h2>
+            <div class="num">01</div>
+          </div>
+          <a class="frame" href="../images/gg-ui-annotated-hifi-full.jpg" target="_blank" rel="noopener" aria-label="Open the full UI map image at full size in a new tab">
+            <img src="../images/gg-ui-annotated-hifi-full.jpg" width="2068" height="8000" alt="The full Grab & Go UI map — every screen and state across the journey, labeled by stage: onboarding, login, store selection, scanning, error recovery, Face ID, duplicate detection, payment, and invoice" decoding="async">
+          </a>
+          <figcaption>Every screen and state across the journey: onboarding, login, store selection, scanning, error recovery, Face ID, duplicate detection, payment, and invoice.</figcaption>
+          <a class="zoom" href="../images/gg-ui-annotated-hifi-full.jpg" target="_blank" rel="noopener">Open image full size ↗</a>
+        </figure>
+
+        <figure class="uimap-figure defer">
+          <div class="fig-head">
+            <h2>High-fidelity screens, annotated</h2>
+            <div class="num">02</div>
+          </div>
+          <a class="frame" href="../images/gg-ui-flowmap-labeled-full.jpg" target="_blank" rel="noopener" aria-label="Open the full annotated hi-fi screens image at full size in a new tab">
+            <img src="../images/gg-ui-flowmap-labeled-full.jpg" width="1824" height="8000" alt="High-fidelity Grab & Go screens annotated with the design reasoning — color-coded scanning, guest location selection, facial recognition, and save-for-later with time-based expiry" loading="lazy" decoding="async">
+          </a>
+          <figcaption>Refined through user testing: color-coded scanning (essentials, restricted, fresh produce), guest location selection, facial recognition to reduce staff dependency, and save-for-later with time-based expiry.</figcaption>
+          <a class="zoom" href="../images/gg-ui-flowmap-labeled-full.jpg" target="_blank" rel="noopener">Open image full size ↗</a>
+        </figure>
+
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="uimap-foot">
+        <a href="grab-and-go.html" class="uimap-back">← Back to Grab &amp; Go</a>
+        <span class="next">Appendix to the Grab &amp; Go case study</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 Divyambari Saxena</div>
+      <div>
+        <a href="mailto:divyambariux@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/divyambari/">LinkedIn</a>
+        <a href="https://www.behance.net/divyambsaxena">Behance</a>
+        <a href="../resume.pdf">Résumé</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

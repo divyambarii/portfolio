@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Single Source of Financial Truth — Divyambari Saxena</title>
+  <meta name="description" content="A unified real-time ledger for CarDekho Financial Services, replacing five disconnected tools and weeks of manual reconciliation with one immutable, audit-ready record per lending case.">
+
+  <meta property="og:title" content="The Single Source of Financial Truth — CarDekho Financial Services ledger">
+  <meta property="og:description" content="Replacing five disconnected tools with one immutable, audit-ready ledger per lending case. Case study by Divyambari Saxena.">
+  <meta property="og:type" content="article">
+
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231F4A3B'/%3E%3Ctext x='16' y='22' font-family='Manrope,sans-serif' font-size='17' font-weight='600' fill='%23F0E8D8' text-anchor='middle'%3EDS%3C/text%3E%3C/svg%3E">
+</head>
+
+<body>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Divyambari Saxena</a>
+      <div class="nav-links">
+        <a href="../index.html" class="active">Work</a>
+        <a href="../about.html">About</a>
+        <a href="../resume.html">Résumé</a>
+        <a href="../contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" style="padding-bottom: var(--sp-6);">
+    <div class="content">
+
+      <div class="cs-eyebrow">Case study <span class="sep">·</span> Systems design <span class="sep">·</span> B2B internal tool</div>
+
+      <h1 class="cs-title">The Single Source <mark>of</mark> Financial Truth</h1>
+
+      <p class="cs-subtitle">
+        Designed a unified real-time ledger for CarDekho Financial Services, replacing five disconnected tools and weeks of manual reconciliation with <mark>one immutable, audit-ready record</mark> per lending case.
+      </p>
+
+      <div class="cs-meta">
+        <div><div class="label">Role</div><div class="value">Product Designer (UX + Research)</div></div>
+        <div><div class="label">Company</div><div class="value">CarDekho Financial Services · Rupyy</div></div>
+        <div><div class="label">Product</div><div class="value">PAYMENT BOX Pro · Ledger System</div></div>
+        <div><div class="label">Scope</div><div class="value">1 year · regulatory deadline</div></div>
+        <div><div class="label">Tools</div><div class="value">Figma · FigJam · Whimsical</div></div>
+        <div><div class="label">Year</div><div class="value">2025</div></div>
+      </div>
+
+      <div style="max-width: 720px;">
+        <div class="cs-eyebrow">TL;DR</div>
+        <p class="cs-body" style="font-size: 19px; line-height: 1.55; color: var(--ink-muted); margin: 0;">
+          When precision is the constraint, systems design is the solution. The product team was managing crores of rupees in vehicle loans across five disconnected tools, with no single source of truth, no audit trail, and reconciliation buried in Excel. I designed PAYMENT BOX Pro's Ledger System: one immutable, <mark>state-machine-driven</mark> record per case, where every transaction is timestamped, locked, and traceable. The principle: in systems where compliance matters, the data model <em>is</em> the design. Outcome: reconciliation moved from a month-end ritual to a real-time signal.
+        </p>
+      </div>
+
+      <figure class="cs-figure" style="margin-top: var(--sp-8);">
+        <img src="../images/pbp-hero.png" alt="Abstract systems diagram — scattered nodes resolving into one connected center" loading="lazy">
+        <figcaption>Systems design is about making order legible: turning scattered tools and silent risk into one source of truth.</figcaption>
+      </figure>
+
+    </div>
+  </header>
+
+  <!-- 01 PROBLEM -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">01 · The problem</div>
+      <h2>Five systems. <mark>Zero truth.</mark></h2>
+
+      <div class="cs-body">
+        <p>
+          CarDekho Financial Services processes vehicle loans across thousands of live cases, disbursing funds in parallel to dealers, customers, and RTOs. The financial picture of any single case lived across <strong>five disconnected systems</strong>: transactions in one tool, invoicing in another, tax in a third, MRTB (money returned to bank) in an email thread, reprocessing in a spreadsheet.
+        </p>
+        <p class="muted">
+          The downstream consequences were not small. Auditors couldn't verify case closure. Ops lived in Excel. Finance reconciled monthly, by hand. Ledgers occasionally failed to net zero, a direct audit exposure.
+        </p>
+      </div>
+
+      <figure class="cs-figure">
+        <img src="../images/pbp-systems.png" alt="Systems, users, and events map: Loan Box and Payment Box with Maker, Checker, and Payment Ops roles, and the core rule debit equals credit" loading="lazy">
+        <figcaption>The ecosystem before design: two systems, three roles, one rule: for every case, debit must equal credit. Mapping this revealed where the truth was getting lost.</figcaption>
+      </figure>
+
+      <table class="cs-table">
+        <thead><tr><th>Before</th><th>After</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="before"><span class="x">✕</span> Five tools for transactions, invoicing, and tax; none reconciled</td>
+            <td><span class="check">✓</span> One immutable ledger per case; every rupee captured</td>
+          </tr>
+          <tr>
+            <td class="before"><span class="x">✕</span> Weekly manual Excel reconciliation</td>
+            <td><span class="check">✓</span> Auto-reconciliation; exceptions alerted only</td>
+          </tr>
+          <tr>
+            <td class="before"><span class="x">✕</span> Ledgers sometimes failing to net zero (audit exposure)</td>
+            <td><span class="check">✓</span> System-enforced net-zero before case lock</td>
+          </tr>
+          <tr>
+            <td class="before"><span class="x">✕</span> MRTB and reprocessing handled via email</td>
+            <td><span class="check">✓</span> Eleven structured edge-case flows</td>
+          </tr>
+          <tr>
+            <td class="before"><span class="x">✕</span> No signal for case-closure eligibility</td>
+            <td><span class="check">✓</span> Full timestamped audit trail with ERP sync</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: var(--sp-7); margin-bottom: var(--sp-4); font-size: 19px;">Who paid the price</h3>
+
+      <div class="persona-grid">
+        <div class="persona">
+          <div class="persona-badge">PO</div>
+          <div>
+            <div class="role">Payment Ops · Disbursements, Settlements</div>
+            <h4>Reactive, not proactive</h4>
+            <ul>
+              <li>No failure notifications; discoveries happened days after the event</li>
+              <li>Manual MRTB and reprocessing reconciliation through email threads</li>
+              <li>No system signal on case-closure readiness</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="persona">
+          <div class="persona-badge">FT</div>
+          <div>
+            <div class="role">Finance Team · Revenue, Invoicing</div>
+            <h4>Truth, monthly</h4>
+            <ul>
+              <li>Manual invoice generation each month via Excel</li>
+              <li>Revenue mismatches across systems with no single source</li>
+              <li>Ledger and Oracle balances drifted with no reconciliation path</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="persona">
+          <div class="persona-badge">AU</div>
+          <div>
+            <div class="role">Auditors · Compliance, Validation</div>
+            <h4>Verification by archaeology</h4>
+            <ul>
+              <li>ERP balance ≠ ledger balance, with no path to reconcile</li>
+              <li>Couldn't confirm cases net to zero at closure</li>
+              <li>No traceability for which transactions were reversed, corrected, or why</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="exhibit">
+        <h3 class="exhibit-h">Two problems, one root cause</h3>
+        <div class="prob-cards">
+          <div class="prob-card">
+            <h4>Audit Risk</h4>
+            <p>Ledger balance does not settle to zero in Payment Box cases, creating debit-credit mismatches and increasing audit exposure.</p>
+          </div>
+          <div class="prob-card">
+            <h4>Manual Reconciliation</h4>
+            <p>Payment Ops teams reconcile cases manually through email, resulting in no system trail, limited visibility, and higher risk of errors.</p>
+          </div>
+        </div>
+        <div class="rootcause">
+          <span class="exhibit-label">Root cause</span>
+          <p>No unified financial record: no single source of truth per case capturing all money movements. The result: non-net-zero ledgers, manual reconciliation, and elevated audit &amp; compliance risk.</p>
+        </div>
+        <div class="approach-cards">
+          <div class="approach-card">
+            <h4><mark>Case Closure &amp; Immutability</mark></h4>
+            <p>A case is only closed when the ledger nets to zero.</p>
+          </div>
+          <div class="approach-card">
+            <h4><mark>Ledger-Derived Invoicing</mark></h4>
+            <p>Every invoice is generated directly from ledger entries.</p>
+          </div>
+          <div class="approach-card">
+            <h4><mark>Reducing Manual Reconciliation</mark></h4>
+            <p>Auto-reconciliation removes email-based reconciliation effort.</p>
+          </div>
+        </div>
+        <p class="exhibit-cap">Two surface problems traced to one root cause, then an approach built on three structural principles.</p>
+      </div>
+
+      <figure class="cs-figure">
+        <img src="../images/pbp-data.png" alt="Donut chart of 26,943 total cases with 44% audit risk and 10% off-system edge cases — together nearly half" loading="lazy">
+        <figcaption>The problem, quantified: across 26,943 cases, 44% carried audit risk and 10% lived entirely off-system. Together, nearly half of all transactions, which made a unified ledger a systemic necessity.</figcaption>
+      </figure>
+
+      <p class="cs-body" style="margin-top: var(--sp-6);">
+        The work was not to redesign an interface. It was to <mark>redesign the system underneath the interface</mark>.
+      </p>
+    </div>
+  </section>
+
+  <!-- 02 NORTH STAR -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">02 · The North Star</div>
+      <h2>One metric to disagree under.</h2>
+
+      <div class="cs-body">
+        <p>
+          Before I opened Figma, I argued for a single North Star metric the team would commit to. The argument was structural: a case that closes wrong creates <em>both</em> audit exposure and revenue leakage. Any dip in this metric is a direct financial-risk signal, not just an ops lag. And in scope debates, of which there were many, every feature could be evaluated against a single criterion.
+        </p>
+      </div>
+
+      <div class="north-star">
+        <div class="label">★ North Star Metric</div>
+        <h3>Financial Case Closure Rate</h3>
+        <p>The percentage of cases that close with a verified net-zero balance, complete Oracle sync, and zero post-closure corrections.</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">3</div><div class="desc">Personas, one data model</div></div>
+        <div class="stat"><div class="num">5 → 1</div><div class="desc">Tools unified into one view</div></div>
+        <div class="stat"><div class="num">11</div><div class="desc">Edge flows designed</div></div>
+        <div class="stat"><div class="num">0</div><div class="desc">Manual steps, happy path</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SOLUTION -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">03 · The solution</div>
+      <h2>Two views, <mark>one data model</mark>.</h2>
+
+      <div class="cs-body">
+        <p>
+          The system serves the same underlying ledger through two complementary views: one for the case, one for the portfolio.
+        </p>
+      </div>
+
+      <figure class="cs-figure">
+        <img src="../images/pbp-consolidation.png" alt="Five disconnected tools — Loan Box, Payment Box, email reconciliation, Excel sheets, manual tracking — collapsing into a single unified ledger" loading="lazy">
+        <figcaption>The shift: five disconnected tools collapsed into a single immutable ledger: accurate, complete, and trusted.</figcaption>
+      </figure>
+
+      <div class="cs-body">
+        <h3 style="font-size: 18px; font-weight: 600; margin-top: var(--sp-6); margin-bottom: var(--sp-3);">Case-Level View: Financial Timeline</h3>
+        <p>
+          Inside every case in PAYMENT BOX Pro, a Ledger Summary tab. Every credit, debit, UTR, and Oracle sync status: chronological, timestamped, immutable. Click any tranche for full state history in a side panel.
+        </p>
+      </div>
+
+      <!-- LEDGER SUMMARY MOCKUP -->
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="left">
+            <span class="product">PAYMENT BOX Pro</span>
+            <span>Case #CDF 2847 · Ledger Summary</span>
+          </div>
+          <div class="left">
+            <span>Honda City · ₹8,42,000 loan · Finance Admin: Priya S.</span>
+            <span class="pill-status">Case Locked ✓</span>
+          </div>
+        </div>
+        <table class="mockup-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Event</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="num">12 Jan</td>
+              <td>Bank funds received</td>
+              <td class="amt muted">—</td>
+              <td class="amt">₹ 8,42,000</td>
+              <td><span class="status settled">Settled</span></td>
+            </tr>
+            <tr>
+              <td class="num">12 Jan</td>
+              <td>Dealer disbursement</td>
+              <td class="amt">₹ 8,00,000</td>
+              <td class="amt muted">—</td>
+              <td><span class="status settled">Settled</span></td>
+            </tr>
+            <tr>
+              <td class="num">12 Jan</td>
+              <td>RTO fee transfer</td>
+              <td class="amt">₹ 28,000</td>
+              <td class="amt muted">—</td>
+              <td><span class="status settled">Settled</span></td>
+            </tr>
+            <tr>
+              <td class="num">13 Jan</td>
+              <td>Convenience fee + GST</td>
+              <td class="amt">₹ 14,000</td>
+              <td class="amt muted">—</td>
+              <td><span class="status settled">Settled</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mockup-foot">
+          <span>Oracle Sync ✓</span>
+          <span class="total">Net Balance · ₹ 0.00 · Net Zero ✓ · Locked</span>
+        </div>
+      </div>
+      <p class="mockup-caption">Fig. 01 · Case-level ledger summary. Every transaction is timestamped, immutable, and signed off by a single net-zero check before lock.</p>
+
+      <div class="cs-body" style="margin-top: var(--sp-7);">
+        <h3 style="font-size: 18px; font-weight: 600; margin-bottom: var(--sp-3);">Global View: Portfolio-Wide Dashboard</h3>
+        <p>
+          A separate destination in PAYMENT BOX Pro. Every case's financial status in one place. Quick Action tabs surface exceptions instantly, <mark>reducing exception detection from month-end to real-time</mark>.
+        </p>
+      </div>
+
+      <!-- GLOBAL VIEW MOCKUP -->
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="left">
+            <span class="product">PAYMENT BOX Pro</span>
+            <span>Global Ledger View</span>
+          </div>
+          <div class="left"><span>Live · 142 active cases</span></div>
+        </div>
+        <div class="mockup-tabs">
+          <div class="tab active">All Cases</div>
+          <div class="tab">Oracle Sync Failed <span class="count">3</span></div>
+          <div class="tab">TU Mismatch <span class="count">1</span></div>
+          <div class="tab">MRTB <span class="count">2</span></div>
+          <div class="tab">Failed</div>
+        </div>
+        <table class="mockup-table">
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Last activity</th>
+              <th>Status</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="num">CDF 2847</td>
+              <td class="num">13 Jan</td>
+              <td><span class="status locked">Locked ✓</span></td>
+              <td class="muted">Finance Admin: Priya S.</td>
+            </tr>
+            <tr>
+              <td class="num">CDF 2901</td>
+              <td class="num">14 Jan</td>
+              <td><span class="status pending">Pending</span></td>
+              <td class="muted">Awaiting final tranche settlement</td>
+            </tr>
+            <tr>
+              <td class="num">CDF 2956</td>
+              <td class="num">15 Jan</td>
+              <td><span class="status failed">Sync Fail</span></td>
+              <td class="muted">⚠ Oracle Sync Failed · action required</td>
+            </tr>
+            <tr>
+              <td class="num">CDF 3014</td>
+              <td class="num">15 Jan</td>
+              <td><span class="status mismatch">TU Mismatch</span></td>
+              <td class="muted">TU resigned · non-terminal tranches updated</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mockup-caption">Fig. 02 · Portfolio-wide view. Quick Action tabs surface exceptions in real time; what used to take a month-end reconciliation now takes one glance.</p>
+
+      <!-- STATE MACHINE -->
+      <div class="cs-body" style="margin-top: var(--sp-7);">
+        <h3 style="font-size: 18px; font-weight: 600; margin-bottom: var(--sp-3);">The ledger state machine</h3>
+        <p>
+          The ledger's spine is a state machine. Every tranche moves through a defined lifecycle: Pending → Settlement → Settled → Posted → Locked, with terminal branches for Cancelled and Failed. Terminal states are immutable. Corrections are new entries, never edits. Case lock requires all five closure conditions simultaneously: net balance zero, ERP synced, no pending tranches, no open exceptions, no Oracle mismatch.
+        </p>
+      </div>
+
+      <div class="statemachine">
+        <div class="sm-rule"><span class="exhibit-label">The rule</span> A case can only lock when the ledger nets to zero.</div>
+
+        <div class="sm-flow">
+          <div class="sm-state"><strong>Pending</strong><small>Maker initiates</small></div>
+          <span class="sm-arrow">→</span>
+          <div class="sm-state"><strong>Settlement</strong><small>Awaiting UTR</small></div>
+          <span class="sm-arrow">→</span>
+          <div class="sm-state"><strong>Settled</strong><small>UTR received</small></div>
+          <span class="sm-arrow">→</span>
+          <div class="sm-state"><strong>Posted</strong><small>TU signed</small></div>
+        </div>
+
+        <div class="sm-branchwrap">
+          <div class="sm-branch-from">From Posted, three routes</div>
+          <div class="sm-branches">
+            <div class="sm-branch goal">
+              <div class="sm-cond">Ledger nets to zero</div>
+              <div class="sm-down">↓</div>
+              <div class="sm-result goal">
+                Case Locked
+                <span class="sm-goaltag">Terminal · goal</span>
+                <small>Immutable. The only state in which a case closes.</small>
+              </div>
+            </div>
+            <div class="sm-branch neutral">
+              <div class="sm-cond">Cancelled</div>
+              <div class="sm-down">↓</div>
+              <div class="sm-result">
+                Reversal Entry
+                <small>A new correcting entry, never a silent edit.</small>
+              </div>
+            </div>
+            <div class="sm-branch fail">
+              <div class="sm-cond">Failed</div>
+              <div class="sm-down">↓</div>
+              <div class="sm-result coral">
+                Reprocessing
+                <small>Loops back to Settlement. Never reaches a locked case.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm-note"><strong>Failed ≠ Reprocessing.</strong> A failed transaction reprocesses; it never silently reaches a locked case. Conflating the two triggers the wrong Ops response every time.</div>
+      </div>
+
+      <div class="cs-body">
+        <p>
+          The most important design call inside the state machine was separating <strong>FAILED</strong> from <strong>REPROCESSING</strong>.
+        </p>
+
+        <p class="muted">
+          <strong style="color: var(--ink);">FAILED</strong> means the UTR was never generated. The bank rejected the transaction at the rail layer. <br>
+          <strong style="color: var(--ink);">REPROCESSING</strong> means a UTR was generated, but the money was reversed using the same UTR, common with government banks and locked NRI accounts.
+        </p>
+
+        <p>
+          Semantically distinct failure modes. Conflating them would trigger the wrong Ops response every single time. A small design call with large operational consequences.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 DECISIONS -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">04 · Key decisions</div>
+      <h2>What I chose, and <mark>what I gave up</mark>.</h2>
+
+      <p class="cs-body">
+        Every important design decision is a trade. Here are the four I'd defend in any review.
+      </p>
+
+      <ul class="decision-list">
+        <li>
+          <div class="what">
+            <strong>Immutability over editability.</strong>
+            <p>Every correction is a new reversal entry. The audit trail is always complete and unbroken. No silent edits, no untraceable adjustments.</p>
+          </div>
+          <div class="gave-up"><strong>Gave up</strong>Simpler UX. Ops would have preferred to "just edit the number."</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>Event-driven default, manual as exception.</strong>
+            <p>Manual entry is a gated edge-case path with HoD approval, not a shortcut that bypasses system logic and creates untraceable entries.</p>
+          </div>
+          <div class="gave-up"><strong>Gave up</strong>Ops flexibility. Some flows became four clicks where they had been one.</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>One data model, three persona-specific views.</strong>
+            <p>Same underlying numbers, three presentations. Ops, Finance, and Audit all trust the same source, because separate systems were the original problem.</p>
+          </div>
+          <div class="gave-up"><strong>Gave up</strong>Faster per-team build. Each persona would have shipped quicker with a siloed tool. We had been there before.</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>Invoice automation deferred to Phase 2.</strong>
+            <p>One-year regulatory deadline. Core ledger and audit trail ship first. The data model already supports invoicing; Phase 2 is execution, not design.</p>
+          </div>
+          <div class="gave-up"><strong>Gave up</strong>Full Finance-team relief on launch day.</div>
+        </li>
+      </ul>
+
+      <h3 style="margin-top: var(--sp-10); margin-bottom: var(--sp-4); font-size: 20px; font-weight: 600;">How I owned this, month by month</h3>
+
+      <div class="exhibit" style="margin-top: var(--sp-6);">
+        <div class="timeline">
+          <div class="tl-card">
+            <span class="x-badge">1</span>
+            <div class="tl-month">Month 1</div>
+            <div class="tl-theme">Understanding the ecosystem</div>
+            <ul>
+              <li>Built a deep understanding of CTS workflows and mapped the flowchart</li>
+              <li>Ran stakeholder interviews with Payment Ops &amp; Finance to surface SOPs and pain points</li>
+              <li>Developed a ground-up view of the existing problem landscape</li>
+            </ul>
+          </div>
+          <div class="tl-card">
+            <span class="x-badge">2</span>
+            <div class="tl-month">Month 2</div>
+            <div class="tl-theme">Designing the ledger framework</div>
+            <ul>
+              <li>Identified key financial events and their trigger points across the lending journey</li>
+              <li>Defined state-transition rules and case-closure logic for ledger balancing</li>
+              <li>Drafted the first-ever Success Flow for the ledger</li>
+            </ul>
+          </div>
+          <div class="tl-card">
+            <span class="x-badge">3</span>
+            <div class="tl-month">Month 3</div>
+            <div class="tl-theme">Refining through insights</div>
+            <ul>
+              <li>Held deep-dives with the Ops team to uncover edge cases</li>
+              <li>Prioritised edge cases by volume and built flows for each scenario</li>
+              <li>Proposed actionables for quick identification of stuck or problematic cases</li>
+            </ul>
+          </div>
+          <div class="tl-card">
+            <span class="x-badge">4</span>
+            <div class="tl-month">Month 4</div>
+            <div class="tl-theme">Building for handoff</div>
+            <ul>
+              <li>Created end-to-end workflow diagrams covering all scenarios</li>
+              <li>Developed happy-flow and sad-flow prototypes for the ledger lifecycle</li>
+              <li>Authored the PRD for engineering handoff</li>
+            </ul>
+          </div>
+        </div>
+        <p class="exhibit-cap">From ecosystem research to PRD authoring: owned end to end, across four months.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 EDGE CASES -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">05 · Edge cases</div>
+      <h2>Where the <mark>real design</mark> lived.</h2>
+
+      <p class="cs-body">
+        In financial ops, edge cases are not edge cases. They are operationally frequent. I designed eleven flows. The four with the most design complexity, each one replacing an email chain with a structured system path:
+      </p>
+
+      <ul class="edge-list">
+        <li>
+          <div class="edge-head"><h4>MRTB: Money Returned to Bank</h4><span class="tag">Manual Entry</span></div>
+          <div class="edge-body">
+            Triggered when money is disbursed but a case is cancelled and funds must be returned. Previously: untracked email chain. <br><br>
+            Ops posts a <em>Case_Cancelled</em> event, then a <em>Back_to_Bank</em> entry with supporting documents attached. Case lock requires last event = Back_to_Bank AND actual balance = ₹0.00. Both conditions must be true.
+          </div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>Reprocessing: Same-UTR Reversal</h4><span class="tag">Semi-Automated</span></div>
+          <div class="edge-body">
+            Triggered when a UTR is received but the transaction reverses with the same UTR, common with government banks and NRI/locked accounts. <br><br>
+            Ops selects the returned entry; a hover-board reveals a Return CTA, and a correction panel opens inline. If the entry has already been Oracle-synced, a ticket-raise option surfaces instead, with the 1 to 2 day sync delay built into the UX expectation.
+          </div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>TU Resign: Mid-Case Change</h4><span class="tag">Auto-Update</span></div>
+          <div class="edge-body">
+            Triggered when a Transaction Undertaking is re-signed. For example, payment method changes from e-cheque to NEFT, or the tranche amount is revised. <br><br>
+            The system auto-updates all non-terminal tranches to match the new TU values. If a settled tranche mismatches the new TU, the case is tagged <em>TU Mismatch</em> in the Global View Quick Action tab for Ops triage.
+          </div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>DD Cancellation: Offline Payment</h4><span class="tag">CSV Upload</span></div>
+          <div class="edge-body">
+            Triggered when a Demand Draft is cancelled, requiring a physical authority letter to the bank. <br><br>
+            Ops uploads a CSV batch via a dedicated panel in PAYMENT BOX Pro. Status auto-updates to <em>DD CANCEL</em>. The hoverboard tracks upload timestamps and case counts. Full audit trail is created without manual per-case entry.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 06 IMPACT -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">06 · Impact</div>
+      <h2>Before and after.</h2>
+
+      <div class="exhibit">
+        <h3 class="exhibit-h">The shift: current state → future state</h3>
+        <div class="shift-wrap">
+          <table class="shift-table">
+            <thead>
+              <tr><th>Dimension</th><th class="th-cur">Current state</th><th class="th-fut">Future state</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="dim">Audit Risk</td>
+                <td class="cur">44% of cases have non-zero ledger balance</td>
+                <td class="fut">85 to 90% of cases close with a balanced, audit-ready ledger, backed by ERP/Oracle sync</td>
+              </tr>
+              <tr>
+                <td class="dim">Manual Reconciliation</td>
+                <td class="cur">10% of cases reconciled entirely over email, with no system trail</td>
+                <td class="fut">Phase 1: edge cases scoped with audit-ready solutions · Phase 2: remaining solutions deployed with minimal manual intervention</td>
+              </tr>
+              <tr>
+                <td class="dim">Financial Traceability</td>
+                <td class="cur">No chronological record of money movement within a case</td>
+                <td class="fut">Every entry's full lifecycle visible in Case View with UTR and supporting docs, all time-ordered</td>
+              </tr>
+              <tr>
+                <td class="dim">Visibility</td>
+                <td class="cur">No unified view of case health</td>
+                <td class="fut">Global View: all cases with lock/unlock status, settled entries, advanced filters, one-click actions</td>
+              </tr>
+              <tr>
+                <td class="dim">Proactive Resolution</td>
+                <td class="cur">No way to identify stuck or at-risk cases without manual work</td>
+                <td class="fut">Case sub-status tags flag cases, proactively alerting stakeholders to act</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="northstar-foot">
+          <div class="ns-row"><span class="ns-k">North Star metric</span> <span class="ns-v"><mark>% of cases locked within 3 months of disbursal</mark></span></div>
+          <div class="ns-row"><span class="ns-k">Supporting metric</span> <span class="ns-v">% of cases closed without manual touch</span></div>
+        </div>
+        <p class="exhibit-cap">Five dimensions, each moved from reactive and invisible to proactive and audit-ready.</p>
+      </div>
+
+      <h3 style="margin-top: var(--sp-8); margin-bottom: var(--sp-4); font-size: 19px;">Operational metrics, in detail</h3>
+
+      <table class="cs-table">
+        <thead>
+          <tr><th style="width: 30%">Metric</th><th style="width: 35%">Before</th><th style="width: 35%">After</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Reconciliation rate</strong></td><td class="before">Couldn't be tracked</td><td>95%+ target, auto-close on happy path</td></tr>
+          <tr><td><strong>Manual Ops time</strong></td><td class="before">Hours per week on Excel</td><td>Near-zero on standard cases</td></tr>
+          <tr><td><strong>Audit trail</strong></td><td class="before">Across 5 systems</td><td>100% immutable, per-entry, single source</td></tr>
+          <tr><td><strong>Discrepancy detection</strong></td><td class="before">Weeks of lag; month-end discovery</td><td>Real-time; surfaced in Quick Action tab</td></tr>
+          <tr><td><strong>Edge-case resolution</strong></td><td class="before">Multi-day email chains</td><td>Structured flows, approval-gated</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 07 LEARNINGS -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">07 · What I'd do differently</div>
+      <h2>The honest version.</h2>
+
+      <div class="cs-body">
+        <p><strong>Quantify earlier.</strong> Pain was documented qualitatively. I should have insisted on weekly Ops-hour baselines from day one. The qualitative story was strong; the quantitative story would have shortened scope debates considerably.</p>
+        <p><strong>Push invoice automation harder.</strong> I treated the regulatory deadline as a constraint to respect. In hindsight, the data-model groundwork meant Phase 2 was small enough to fit inside Phase 1, and the Finance team would have benefited from the relief at launch.</p>
+        <p><strong>Louder version control on the data model.</strong> The data model went through several iterations during design. I documented decisions in FigJam but not as cleanly as I'd want a future designer to inherit. Documentation discipline upstream of Figma is a habit I'm still building.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 REFLECTION -->
+  <section class="cs-section" style="border-bottom: none;">
+    <div class="content">
+      <div class="section-num">08 · Reflection</div>
+
+      <div class="pullquote">
+        In fintech, precision is its own UX. Every field name, every state label, every permission carries operational and compliance consequence. There is no decorative layer.
+      </div>
+
+      <p class="cs-body" style="margin-top: var(--sp-6);">
+        I learned that <mark>the most important design work happens before pixels</mark>. The state machine in Whimsical forced clarity that no amount of Figma iteration would have surfaced. Every screen on PAYMENT BOX Pro Ledger has a defensible reason to exist, not because the layout is right, but because the structure underneath is right.
+      </p>
+
+      <p class="cs-body tiny" style="margin-top: var(--sp-7);">
+        <strong>Team:</strong> Product Manager · Two Engineering Managers · Ops + Finance stakeholders. <br>
+        <strong>My ownership:</strong> UX architecture, state-machine design, all eleven edge-case flows, persona-view definitions, design-system contributions, research synthesis with Ops + Finance.
+      </p>
+    </div>
+  </section>
+
+  <section class="next-project">
+    <div class="content">
+      <a href="farmer-chat.html">
+        <div>
+          <div class="label">Next case study</div>
+          <h3>Designing voice-first AI for rural India &amp; Africa</h3>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 Divyambari Saxena</div>
+      <div>
+        <a href="mailto:divyambariux@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/divyambari/">LinkedIn</a>
+        <a href="https://www.behance.net/divyambsaxena">Behance</a>
+        <a href="../resume.pdf">Résumé</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

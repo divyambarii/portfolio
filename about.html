@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Divyambari Saxena</title>
+  <meta name="description" content="How I think about product design — systems, research, and AI-native methods. Three years of shipped work across fintech and emerging markets.">
+  <link rel="stylesheet" href="styles.css">  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231F4A3B'/%3E%3Ctext x='16' y='22' font-family='Manrope,sans-serif' font-size='17' font-weight='600' fill='%23F0E8D8' text-anchor='middle'%3EDS%3C/text%3E%3C/svg%3E">
+
+  <style>
+    .about-intro {
+      display: flex;
+      gap: var(--sp-8);
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .about-portrait {
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 4 / 5;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .about-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 50%;
+      display: block;
+    }
+    .about-intro-copy {
+      flex: 1;
+      min-width: 300px;
+    }
+    /* Hero headline: single, clean marker block (descender-safe, skew-free) */
+    .about-intro-copy h1 {
+      color: var(--ink);
+      margin-bottom: var(--sp-7);
+    }
+    .hero-mark {
+      background: var(--marker);
+      color: var(--ink);
+      padding: 0.04em 0.15em;
+      border-radius: 2px;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+    /* Intermediate type step between display headline and grey body */
+    .hero-lead {
+      font-size: clamp(20px, 2vw, 22px);
+      line-height: 1.4;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: var(--sp-5);
+      max-width: 640px;
+    }
+    .about-intro-copy .hero-lede {
+      margin-bottom: 0;
+    }
+
+    .about-video {
+      margin-top: var(--sp-10);
+    }
+    .about-video-label {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-muted);
+      margin-bottom: var(--sp-3);
+    }
+    .about-video-frame {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(26, 24, 21, 0.12);
+      background: var(--ink);
+    }
+    .about-video-frame iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    /* Click-to-play facade with custom thumbnail */
+    .about-video-facade {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      cursor: pointer;
+      display: block;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .about-video-facade img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 260ms var(--ease-out, ease), filter 260ms var(--ease-out, ease);
+    }
+    .about-video-facade:hover img {
+      transform: scale(1.015);
+      filter: brightness(0.96);
+    }
+    .about-video-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 76px;
+      height: 76px;
+      border-radius: 999px;
+      background: var(--surface);
+      box-shadow: 0 6px 24px rgba(26, 24, 21, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 180ms var(--ease-out, ease), background-color 180ms ease;
+    }
+    .about-video-facade:hover .about-video-play {
+      background: var(--paper);
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+    .about-video-play svg {
+      width: 28px;
+      height: 28px;
+      margin-left: 4px;
+      fill: var(--forest);
+    }
+    .about-video-facade:focus-visible {
+      outline: 3px solid var(--forest);
+      outline-offset: 3px;
+    }
+    .about-video-caption {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-top: var(--sp-2);
+    }
+
+    @media (max-width: 720px) {
+      .about-intro {
+        gap: var(--sp-6);
+      }
+      .about-portrait {
+        max-width: 280px;
+        margin: 0 auto;
+      }
+      .about-intro-copy {
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Divyambari Saxena</a>
+      <div class="nav-links">
+        <a href="index.html">Work</a>
+        <a href="about.html" class="active">About</a>
+        <a href="resume.html">Résumé</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="about-intro" style="align-items: center">
+        <div class="about-portrait">
+          <img src="images/about-portrait.jpg"
+            alt="Portrait of Divyambari Saxena"
+            loading="lazy" style="width: 340px">
+        </div>
+        <div class="about-intro-copy" style="width: 645px">
+          <div class="eyebrow">About</div>
+          <h1 style="line-height: 1.3; font-size: 49px">Three years of shipped work in <mark class="hero-mark" style="padding: 0px 11px">systems design</mark>, constraint-based UX, and AI workflows.</h1>
+
+          <p class="hero-lead">I design systems that hold up under real-world constraint.</p>
+
+          <p class="hero-lede" style="font-size: 17px">
+            I'm a product designer, currently based in Delhi, open to relocation anywhere. I grew up in Lucknow, studied Visual Arts at the University of Lucknow, and moved into product design because the field rewards the two things I care about most: thinking carefully, and listening hard.
+          </p>
+        </div>
+      </div>
+
+      <section class="about-video">
+        <p class="about-video-label">A short walkthrough</p>
+        <div class="about-video-frame">
+          <button type="button" class="about-video-facade" id="about-video-facade" aria-label="Play portfolio walkthrough video">
+            <img src="images/about-video-thumb.png" alt="UX Portfolio 2026 — Product Designer" loading="lazy">
+            <span class="about-video-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+            </span>
+          </button>
+        </div>
+        <p class="about-video-caption">A short overview of how I think about design and the work on this site.</p>
+      </section>
+    </div>
+  </header>
+
+  <section class="about-section">
+    <div class="reading">
+      <div class="eyebrow">How I think about design</div>
+      <h2 style="font-size: clamp(28px, 3.2vw, 36px); margin-bottom: var(--sp-6); letter-spacing: -0.028em; line-height: 1.2;">Three things I take seriously, and one I take skeptically.</h2>
+
+      <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3); margin-top: var(--sp-6);">I take systems seriously.</h3>
+      <p>
+        The case studies on this site lean heavily on <mark>state machines</mark>, edge cases, and data models, because in systems-heavy products, those <em>are</em> the design. A ledger with eight transaction states isn't an interaction problem; it's a structural one. Screens follow from structure, not the other way around. My favourite design tool is Whimsical, not Figma.
+      </p>
+
+      <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3); margin-top: var(--sp-6);">How my case studies fit together.</h3>
+      <p>
+        The two case studies here look different on the surface. One is a fintech ledger system, the other an AI advisory app for smallholder farmers. They solve the same design problem: how to build systems for <mark>real constraint</mark>.
+      </p>
+      <p>
+        In fintech, constraint is precision. Every state label, every transaction record, every audit trail carries compliance and financial consequence. The screens follow from the data model; the UX follows from the systems thinking.
+      </p>
+      <p>
+        In farming, constraint is access. Users had low digital literacy, no shared language with the design team, limited bandwidth, and only voice as a reliable input. The interface had to be voice-first; the interactions had to be research-informed and resilient to failure.
+      </p>
+      <p>
+        Different domains, same principle: when you build for any real constraint, whether regulatory, technical, or human, the design thinking is identical. Precision, humility, systems first and screens second. That is why the work travels across fintech, social impact, consumer, and B2B SaaS. The constraint changes; the approach does not.
+      </p>
+
+      <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3); margin-top: var(--sp-6);">I take research seriously.</h3>
+      <p>
+        In my research, I've spent two years doing mixed-methods work with users in constraint: smallholder farmers across India and East Africa, first-time smartphone users, low-literacy populations. Moderated interviews, contextual inquiry, prototype testing in five languages, longitudinal analysis. The work taught me that <mark>the gap between what users say and what users do</mark> is the entire job. Self-reported preferences are not data. Observed behaviour is.
+      </p>
+
+      <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3); margin-top: var(--sp-6);">I take AI seriously, but skeptically.</h3>
+      <p>
+        I've shipped AI products: Farmer.Chat, AI-personas for content recall, conversational onboarding for Vistaar. I also use AI tools daily for research synthesis, draft writing, and rapid ideation. I'm clear-eyed about what genuinely accelerates good work and what is <mark>speed-without-substance</mark>. AI is bad at deciding what matters, and good at executing once that decision is made.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" style="max-width: 660px; margin-left: auto; margin-right: auto;">
+
+  <section class="about-section">
+    <div class="reading">
+      <div class="eyebrow">What I'm good at</div>
+      <h2 style="font-size: clamp(24px, 2.6vw, 30px); margin-bottom: var(--sp-5); letter-spacing: -0.025em;">A non-exhaustive list, ordered roughly by confidence.</h2>
+
+      <ul>
+        <li>Designing for <strong>state-rich, ops-heavy systems</strong>: fintech ledgers, admin tools, lending workflows.</li>
+        <li>Mixed-methods research with <strong>low-literacy, multilingual, and first-time-online users</strong>.</li>
+        <li>Translating field insights into product decisions PMs and engineers can act on the same week.</li>
+        <li>Designing AI experiences for people who don't read, write, or share my mental models.</li>
+        <li>Building design systems (components, tokens, patterns) that compound across teams over time.</li>
+        <li>Writing: case studies, research synthesis, design rationale. Most of my best decisions show up in writing before they show up in Figma.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" style="max-width: 660px; margin-left: auto; margin-right: auto;">
+
+  <section class="about-section">
+    <div class="reading">
+      <div class="eyebrow">What I'm working on improving</div>
+      <h2 style="font-size: clamp(24px, 2.6vw, 30px); margin-bottom: var(--sp-5); letter-spacing: -0.025em;">The honest version.</h2>
+
+      <ul>
+        <li>Quantifying impact <em>earlier</em> in the design process. I now insist on a baseline metric before I open Figma. I didn't always.</li>
+        <li>Saying no to scope I can't defend. Three-year-mark lesson, still in progress.</li>
+        <li>Mentoring. I've started informally; I'd like to do it deliberately.</li>
+        <li>Communicating design decisions in writing without slipping into either jargon or vagueness. This site is part of that practice.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule" style="max-width: 660px; margin-left: auto; margin-right: auto;">
+
+  <section class="about-section">
+    <div class="reading">
+      <div class="eyebrow">Tools I reach for</div>
+      <h2 style="font-size: clamp(22px, 2.4vw, 26px); margin-bottom: var(--sp-5); letter-spacing: -0.022em;">A working set, not a comprehensive list.</h2>
+
+      <p>
+        <strong>Design:</strong> Figma, FigJam, <mark>Whimsical</mark> (for state machines and data models), Adobe XD, Sketch.
+      </p>
+      <p>
+        <strong>Research:</strong> Notion (synthesis), Dovetail when budget allows, Maze for unmoderated, Loom for async readouts, Otter for transcription.
+      </p>
+      <p>
+        <strong>AI in practice:</strong> Claude (synthesis, writing, structuring research), ChatGPT, Perplexity, Notion AI. I treat AI as a junior collaborator: useful for drafting, dangerous for deciding.
+      </p>
+      <p>
+        <strong>Collaboration:</strong> Linear, Jira, Slack, Loom. I prefer async-by-default for decisions that need a paper trail.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" style="max-width: 660px; margin-left: auto; margin-right: auto;">
+
+  <section class="about-section">
+    <div class="reading">
+      <div class="eyebrow">Outside design</div>
+      <h2 style="font-size: clamp(22px, 2.4vw, 26px); margin-bottom: var(--sp-5); letter-spacing: -0.022em;">A short list.</h2>
+
+      <p>
+        I read more than I should and write more than I admit to. I keep a long-running Notion of papers, essays, and field notes. Most of what ends up in case studies starts there.
+      </p>
+      <p>
+        I'm easy to reach if you want to talk about behavioural design, Indian fintech regulation, or how to design for a user who can't read your UI.
+      </p>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="content">
+      <h2>Let's talk.</h2>
+      <p>
+        Roles, collaborations, mentorship, or just a good conversation about systems and research. All welcome.
+      </p>
+      <div class="cta-links">
+        <a href="mailto:divyambariux@gmail.com">→ divyambariux@gmail.com</a>
+        <a href="https://www.linkedin.com/in/divyambari/">→ LinkedIn</a>
+        <a href="resume.pdf">→ Résumé (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 Divyambari Saxena</div>
+      <div>
+        <a href="mailto:divyambariux@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/divyambari/">LinkedIn</a>
+        <a href="https://www.behance.net/divyambsaxena">Behance</a>
+        <a href="resume.pdf">Résumé</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ───────────────── TWEAKS ───────────────── -->
+  <style id="tweak-overrides"></style>
+  <div id="tweaks-root"></div>
+
+  <script>
+    (function () {
+      var facade = document.getElementById('about-video-facade');
+      if (!facade) return;
+      facade.addEventListener('click', function () {
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/5WNxLYGj_cw?autoplay=1';
+        iframe.title = 'Portfolio walkthrough';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        facade.replaceWith(iframe);
+      });
+    })();
+  </script>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="about-tweaks.jsx"></script>
+
+  <template id="__bundler_thumbnail" data-bg-color="#1F4A3B">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#1F4A3B"/>
+      <text x="600" y="430" font-family="Manrope, sans-serif" font-size="220" font-weight="600" fill="#F0E8D8" text-anchor="middle">DS</text>
+    </svg>
+  </template>
+
+</body>
+</html>

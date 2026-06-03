@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grab &amp; Go — Reimagining self-checkout — Divyambari Saxena</title>
+  <meta name="description" content="Grab & Go — an adaptive, confidence-score-driven self-checkout system. 36 weeks of field research across Bangalore, Delhi, and Ahmedabad. Checkout 30–45 seconds faster, staff interventions down 50%, 0 users confused by the new flow.">
+
+  <meta property="og:title" content="Grab & Go — Reimagining self-checkout — Divyambari Saxena">
+  <meta property="og:description" content="An adaptive, confidence-score-driven self-checkout system. Faster, smarter, and frustration-free.">
+  <meta property="og:type" content="article">
+
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231F4A3B'/%3E%3Ctext x='16' y='22' font-family='Manrope,sans-serif' font-size='17' font-weight='600' fill='%23F0E8D8' text-anchor='middle'%3EDS%3C/text%3E%3C/svg%3E">
+
+  <style>
+    /* Long, image-heavy page: skip rendering off-screen sections until near viewport */
+    .cs-section { content-visibility: auto; contain-intrinsic-size: auto 700px; }
+    /* HMW challenge cards */
+    .hmw-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4);
+      max-width: 920px; margin: var(--sp-6) 0 var(--sp-7);
+    }
+    .hmw-card {
+      background: var(--surface); border: 1px solid rgba(26,24,21,0.08);
+      border-top: 3px solid var(--forest); border-radius: 8px; padding: var(--sp-5) var(--sp-6);
+      box-shadow: 0 1px 2px rgba(26,24,21,0.04), 0 2px 10px rgba(26,24,21,0.05);
+    }
+    .hmw-card .n {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+      color: var(--forest); margin-bottom: var(--sp-3); text-transform: uppercase;
+    }
+    .hmw-card p { font-size: 16px; line-height: 1.45; color: var(--ink); margin: 0; font-weight: 500; }
+    @media (max-width: 760px) { .hmw-grid { grid-template-columns: 1fr; } }
+
+    /* ===== Real-image figures ===== */
+    .gg-fig { margin: var(--sp-8) 0; max-width: 940px; }
+    .gg-fig img {
+      width: 100%; height: auto; display: block;
+      border-radius: 8px; box-shadow: 0 4px 16px rgba(26,24,21,0.10);
+    }
+    .gg-fig figcaption {
+      font-family: var(--font-mono); font-size: 13px; line-height: 1.5;
+      color: var(--ink-muted); margin-top: var(--sp-2); max-width: 760px;
+    }
+    .photo-2up { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin: var(--sp-8) 0; max-width: 940px; }
+    .photo-2up figure { margin: 0; }
+    .photo-2up img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-radius: 8px; box-shadow: 0 4px 16px rgba(26,24,21,0.10); }
+    .photo-2up figcaption { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--ink-muted); margin-top: var(--sp-2); }
+
+    /* ===== Native rebuilt diagrams (Part B) ===== */
+    .gg-diagram { margin: var(--sp-7) 0; max-width: 940px; }
+    .gg-dia-h { font-size: 20px; font-weight: 600; letter-spacing: -0.012em; margin-bottom: var(--sp-5); }
+
+    /* B1 — Friction journey */
+    .fj-card { background: var(--surface); border: 1px solid rgba(26,24,21,0.08); border-radius: 8px; padding: var(--sp-6); box-shadow: 0 1px 2px rgba(26,24,21,0.04), 0 2px 10px rgba(26,24,21,0.05); }
+    .fj-zones { display: grid; grid-template-columns: 4fr 3fr; gap: var(--sp-2); margin-bottom: var(--sp-3); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .fj-zones .z { padding: 5px var(--sp-3); border-radius: 4px; text-align: center; }
+    .fj-zones .z.friction { background: var(--surface-tint); border: 1px solid var(--rule); color: var(--ink-muted); }
+    .fj-zones .z.disruption { background: rgba(199,90,74,0.08); border: 1px solid rgba(199,90,74,0.25); color: var(--coral); }
+    .fj-bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--sp-2); align-items: end; height: 150px; border-bottom: 1px solid var(--rule-strong); }
+    .fj-bar { background: var(--forest); opacity: 0.5; border-radius: 6px 6px 0 0; }
+    .fj-bar.peak { background: var(--coral); opacity: 1; }
+    .fj-stages { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--sp-2); margin-top: var(--sp-3); }
+    .fj-stage { font-family: var(--font-mono); font-size: 10px; line-height: 1.35; color: var(--ink-muted); text-align: center; }
+    .fj-stage.peak { color: var(--coral); font-weight: 500; }
+    .fj-callout { margin-top: var(--sp-5); border-left: 3px solid var(--coral); background: rgba(199,90,74,0.06); border-radius: 0 8px 8px 0; padding: var(--sp-3) var(--sp-4); font-size: 14px; color: var(--ink); line-height: 1.55; }
+    .fj-callout strong { color: var(--coral); }
+
+    /* B2 — Spectrum vs Situation */
+    .spec-sit { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+    .spec-col h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--forest); margin-bottom: var(--sp-4); }
+    .spec-col .sub { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); display: block; margin-top: 2px; text-transform: none; letter-spacing: 0; }
+    .chip-grid { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+    .chip { background: var(--forest-tint); border: 1px solid var(--forest-edge); border-radius: 999px; padding: 6px var(--sp-3); font-size: 13px; color: var(--ink); }
+    @media (max-width: 760px) { .spec-sit { grid-template-columns: 1fr; } }
+
+    /* B3 — Hierarchy pyramid */
+    .pyramid { display: flex; flex-direction: column; align-items: center; gap: var(--sp-2); }
+    .pyr-tier { color: var(--paper); border-radius: 6px; padding: var(--sp-4) var(--sp-5); text-align: center; }
+    .pyr-tier .t { font-weight: 600; font-size: 16px; letter-spacing: 0.01em; }
+    .pyr-tier .d { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; opacity: 0.9; margin-top: 4px; }
+    .pyr-tier.top { background: var(--forest); width: 62%; }
+    .pyr-tier.mid { background: var(--forest-hover); width: 81%; }
+    .pyr-tier.base { background: #3C7D67; width: 100%; }
+    .pyr-labels { display: flex; justify-content: space-between; gap: var(--sp-4); margin-top: var(--sp-4); font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+    .pyr-labels .pl { max-width: 300px; }
+    .pyr-labels .pl.right { text-align: right; }
+    @media (max-width: 760px) { .pyr-tier.top, .pyr-tier.mid, .pyr-tier.base { width: 100%; } .pyr-labels { flex-direction: column; } .pyr-labels .pl.right { text-align: left; } }
+
+    /* B4 — Confidence flow */
+    .cflow { display: flex; flex-direction: column; gap: var(--sp-3); }
+    .cnode { background: var(--surface); border: 1px solid var(--rule-strong); border-radius: 8px; padding: var(--sp-3) var(--sp-4); font-size: 14px; font-weight: 500; color: var(--ink); align-self: flex-start; }
+    .cflow .branch-from { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
+    .cbranch { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+    .lane { border-radius: 8px; padding: var(--sp-4); }
+    .lane.high { background: var(--forest-tint); border: 1px solid var(--forest-edge); }
+    .lane.low { background: rgba(199,90,74,0.06); border: 1px solid rgba(199,90,74,0.25); }
+    .lane .lane-h { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: var(--sp-3); }
+    .lane.high .lane-h { color: var(--forest); }
+    .lane.low .lane-h { color: var(--coral); }
+    .lane .step { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 8px var(--sp-3); font-size: 13px; margin-bottom: var(--sp-2); color: var(--ink); }
+    .lane .step:last-child { margin-bottom: 0; }
+    .lane .step.end { font-weight: 600; }
+    .lane.high .step.end { border-color: var(--forest-edge); color: var(--forest); }
+    @media (max-width: 760px) { .cbranch { grid-template-columns: 1fr; } }
+
+    /* B5 — Streamlined process */
+    .streamline { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-2); align-items: stretch; }
+    .sl-step { border-radius: 8px; padding: var(--sp-4); border: 1px solid; }
+    .sl-step .n { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: var(--sp-2); opacity: 0.85; }
+    .sl-step .t { font-weight: 600; font-size: 14px; margin-bottom: var(--sp-2); line-height: 1.25; }
+    .sl-step .d { font-size: 12.5px; line-height: 1.45; color: var(--ink-muted); }
+    @media (max-width: 760px) { .streamline { grid-template-columns: 1fr; } }
+
+    /* B6 — Three signals */
+    .signals { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+    .signal-card { background: var(--forest-tint); border: 1px solid var(--forest-edge); border-radius: 8px; padding: var(--sp-5); }
+    .signal-card .ic { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--forest); margin-bottom: var(--sp-2); }
+    .signal-card h4 { font-size: 16px; margin-bottom: var(--sp-2); }
+    .signal-card p { font-size: 13px; color: var(--ink-muted); margin: 0; line-height: 1.5; }
+    .signals-center { text-align: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-top: var(--sp-4); }
+    @media (max-width: 760px) { .signals { grid-template-columns: 1fr; } }
+
+    /* ===== UI-map CTA card ===== */
+    .uimap-cta {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--sp-5);
+      margin: var(--sp-8) 0; padding: var(--sp-5) var(--sp-6);
+      background: var(--surface); border: 1px solid rgba(26,24,21,0.10);
+      border-radius: 12px; text-decoration: none; color: var(--ink);
+      box-shadow: 0 1px 2px rgba(26,24,21,0.04), 0 2px 10px rgba(26,24,21,0.05);
+      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+    .uimap-cta:hover { border-color: var(--forest); box-shadow: 0 6px 22px rgba(26,24,21,0.12); }
+    .uimap-cta .cta-copy { display: flex; flex-direction: column; gap: 5px; }
+    .uimap-cta .cta-title { font-size: 19px; font-weight: 600; letter-spacing: -0.012em; line-height: 1.25; }
+    .uimap-cta .cta-sub { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: var(--ink-muted); max-width: 60ch; }
+    .uimap-cta .cta-arrow {
+      flex-shrink: 0; width: 44px; height: 44px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--rule-strong); color: var(--forest); font-size: 20px;
+      transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+    .uimap-cta:hover .cta-arrow { background: var(--forest); border-color: var(--forest); color: var(--paper); transform: translateX(3px); }
+    @media (max-width: 600px) { .uimap-cta { flex-direction: column; align-items: flex-start; gap: var(--sp-4); } }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Divyambari Saxena</a>
+      <div class="nav-links">
+        <a href="../index.html" class="active">Work</a>
+        <a href="../about.html">About</a>
+        <a href="../resume.html">Résumé</a>
+        <a href="../contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" style="padding-bottom: var(--sp-6);">
+    <div class="content">
+
+      <div class="cs-eyebrow">Case study <span class="sep">·</span> Product Design <span class="sep">·</span> Accessibility <span class="sep">·</span> Self-Checkout</div>
+
+      <h1 class="cs-title">Grab &amp; Go</h1>
+
+      <p class="cs-subtitle">
+        Reimagining self-checkout: faster, smarter, and <mark>frustration-free</mark>.
+      </p>
+
+      <div class="cs-meta">
+        <div><div class="label">Role</div><div class="value">UX, UI, Interaction Design · Research · Prototyping</div></div>
+        <div><div class="label">Product</div><div class="value">Mobile App / Self-Checkout System</div></div>
+        <div><div class="label">Duration</div><div class="value">36 weeks</div></div>
+        <div><div class="label">Research</div><div class="value">Field studies · Bangalore, Delhi, Ahmedabad</div></div>
+        <div><div class="label">Focus</div><div class="value">Accessibility · Design systems · Microinteractions</div></div>
+        <div><div class="label">Year</div><div class="value">2023</div></div>
+      </div>
+
+      <div style="max-width: 720px;">
+        <div class="cs-eyebrow">TL;DR</div>
+        <p class="cs-body" style="font-size: 19px; line-height: 1.55; color: var(--ink-muted); margin: 0;">
+          In 2023, self-checkout kiosks promised speed but delivered friction: scanning errors, bagging alerts, and constant waits for staff help. I joined a small team to reimagine this everyday interaction used by millions but enjoyed by few. Over 36 weeks, I led UX research and strategy, ran field studies across Bangalore, Delhi, and Ahmedabad, and designed <mark class="strong">Guided Checkout</mark>, an adaptive, confidence-score-driven system that surfaces the right action only when needed. In prototype testing: checkout <strong>30 to 45 seconds faster</strong>, staff interventions down <strong>50%</strong>, and <strong>0 users</strong> confused by the new flow.
+        </p>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 01 RETHINKING THE CHECKOUT -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">01 · Rethinking the checkout</div>
+      <h2>A daily interaction used by <mark>millions</mark>, enjoyed by few.</h2>
+
+      <div class="cs-body">
+        <p class="lead">
+          In 2023, using a self-checkout kiosk often felt like a gamble. What should've been quick turned into a cycle of alerts, bagging errors, and waiting for help.
+        </p>
+        <p>
+          I joined a small team of designers and engineers to reimagine this daily interaction, used by millions, enjoyed by few. Our goal was simple: make self-checkout seamless, intuitive, and accessible for all.
+        </p>
+
+        <h3 style="font-size: 19px; font-weight: 600; margin-top: var(--sp-6); margin-bottom: var(--sp-3);">Design by accretion</h3>
+        <p>
+          Self-checkout kiosks evolved from niche experiments to mainstream fixtures in supermarkets worldwide. What started as a quick, convenient option became the default for millions. But as usage grew, the system was patched together rather than redesigned. Barcode scanners, bagging sensors, and payment options were added incrementally, each solving part of the problem but not the whole. Over time, the interface became a <mark>mismatched collection of decisions</mark>, losing the sense of innovation it once had.
+        </p>
+        <p>
+          Our mission wasn't just to revive the kiosk's original simplicity; it was to create a system meeting the needs of today's diverse users, from tech-savvy millennials to older adults using touchscreens for the first time.
+        </p>
+      </div>
+
+      <div class="persona-grid" style="margin-top: var(--sp-6);">
+        <div class="persona">
+          <div class="persona-badge">01</div>
+          <div>
+            <div class="role">Goal</div>
+            <h4>Make checkout fast, intuitive, and predictable for everyone.</h4>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">02</div>
+          <div>
+            <div class="role">Goal</div>
+            <h4>Minimize friction and confusion caused by the system.</h4>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">03</div>
+          <div>
+            <div class="role">Goal</div>
+            <h4>Lay the groundwork for inclusive, scalable retail experiences.</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 THE CHALLENGE -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">02 · The challenge</div>
+      <h2>Rebuild trust in <mark>36 weeks</mark>.</h2>
+
+      <div class="cs-body">
+        <p>
+          As Lead Product Designer and UX Strategist, I led UX research and strategy for the self-checkout redesign. I worked with a cross-functional team to identify pain points and create a new interaction flow. Collaborating with Ayan Ahmad Khan on UI design and Budhil Raj Patel on technical strategy, we conducted field research, iterated on prototypes, and defined the north-star experience.
+        </p>
+
+        <h3 style="font-size: 19px; font-weight: 600; margin-top: var(--sp-6); margin-bottom: var(--sp-3);">Kickoff</h3>
+        <p>
+          At the start, we didn't have a clear brief or a defined vision of what "better" looked like for self-checkout. But we shared a strong hunch: the experience felt slow, unpredictable, and unforgiving. To move forward, I partnered with Ayan to observe how real shoppers interacted with kiosks in busy supermarkets. <mark>No scripts, no assumptions</mark>. Just watching, listening, and tracking frustration as it unfolded in real time.
+        </p>
+      </div>
+
+      <figure class="gg-fig">
+        <img src="../images/gg-photo-team-review-web.jpg" alt="Three team members reviewing the self-checkout flow on a laptop together" loading="lazy">
+        <figcaption>Cross-functional review: synthesizing field findings with the team and iterating on the flow between rounds.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 03 TRACING THE FRICTION -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">03 · Tracing the friction</div>
+      <h2>Early insights from <mark>the field</mark>.</h2>
+
+      <p class="cs-body">
+        We watched shoppers across busy supermarkets and tracked where the experience broke down. Five patterns surfaced again and again.
+      </p>
+
+      <div class="persona-grid" style="margin-top: var(--sp-5);">
+        <div class="persona">
+          <div class="persona-badge">01</div>
+          <div>
+            <div class="role">Insight</div>
+            <h4>Scanner hesitation</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              Shoppers hesitated before scanning, unsure how to position items or when they'd be recognized. Many adjusted the barcode repeatedly before it worked.
+            </p>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">02</div>
+          <div>
+            <div class="role">Insight</div>
+            <h4>Bagging alert fatigue</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              Users were interrupted by "Unexpected Item in Bagging Area" alerts. Some hit "Skip Bagging," triggering security checks. Others called staff without trying to fix it.
+            </p>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">03</div>
+          <div>
+            <div class="role">Insight</div>
+            <h4>Looking for confirmation</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              Many sought constant validation: checking the screen, waiting for beeps, looking to staff before acting. New users moved cautiously, afraid of mistakes.
+            </p>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">04</div>
+          <div>
+            <div class="role">Insight</div>
+            <h4>Fast tappers vs. deliberate pressers</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              Some tapped rapidly when the UI lagged, causing errors; others pressed firmly and waited before continuing.
+            </p>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">05</div>
+          <div>
+            <div class="role">Insight</div>
+            <h4>Last-minute payment confusion</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              At checkout, some hovered, unsure whether to tap, insert, or swipe. Digital payment options were often missed or met with hesitation.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-2up">
+        <figure>
+          <img src="../images/gg-photo-snackaisle-web.jpg" alt="A shopper checking a snack package with their phone in a supermarket aisle while another person looks on" loading="lazy">
+          <figcaption>Field research in a real store: observing how shoppers actually move, hesitate, and decide. No scripts, no assumptions.</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/gg-photo-shop-haircolor-web.jpg" alt="Two shoppers looking at a hair-color box and a phone together in a personal-care aisle" loading="lazy">
+          <figcaption>Watching real interactions in context: where shoppers paused, what confused them, and what they reached for help with.</figcaption>
+        </figure>
+      </div>
+
+      <div class="gg-diagram">
+        <h3 class="gg-dia-h">Where the journey breaks down</h3>
+        <div class="fj-card">
+          <div class="fj-zones">
+            <div class="z friction">Friction</div>
+            <div class="z disruption">Disruption</div>
+          </div>
+          <div class="fj-bars">
+            <div class="fj-bar" style="height: 24%;"></div>
+            <div class="fj-bar" style="height: 36%;"></div>
+            <div class="fj-bar" style="height: 56%;"></div>
+            <div class="fj-bar peak" style="height: 100%;"></div>
+            <div class="fj-bar" style="height: 62%;"></div>
+            <div class="fj-bar" style="height: 72%;"></div>
+            <div class="fj-bar" style="height: 30%;"></div>
+          </div>
+          <div class="fj-stages">
+            <div class="fj-stage">Approach kiosk</div>
+            <div class="fj-stage">Self checkout</div>
+            <div class="fj-stage">Scan items</div>
+            <div class="fj-stage peak">Bag items</div>
+            <div class="fj-stage">Review &amp; confirm</div>
+            <div class="fj-stage">Make payment</div>
+            <div class="fj-stage">Exit</div>
+          </div>
+          <div class="fj-callout">
+            <strong>The bagging error loop.</strong> Frustration peaks at "Bag items": an "Unexpected item in bagging area" alert sends the shopper back a step, or straight to staff. This is where the experience collapses.
+          </div>
+        </div>
+        <p class="exhibit-cap">Frustration mapped across the checkout journey. The bagging step is where the experience collapses: the "bagging error loop" that sends users back, or to staff.</p>
+      </div>
+
+      <div class="cs-body" style="margin-top: var(--sp-6);">
+        <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3);">Evolving expectations</h3>
+        <p>
+          Initially, issues like misplaced barcodes and extra taps seemed minor. But as we analyzed behavior, it became clear shoppers expected a seamless experience, not something they had to "figure out." As self-checkout became common, users developed a mental model of how it should work. Delays and unclear prompts felt like unnecessary friction, and frustration grew not just with the system, but with the effort required. Improving usability wasn't enough. We needed to rethink the experience to make it intuitive and effortless.
+        </p>
+      </div>
+
+      <div class="pullquote">
+        Curiosity revealed an opportunity to make self-checkout effortless for everyone, everywhere.
+      </div>
+
+      <p class="cs-body">
+        If tech-savvy shoppers in well-equipped urban supermarkets struggled, hesitating at scanners, triggering errors, needing staff help, what did that mean for less experienced users in busier, less optimized environments? How much harder was it for elderly shoppers, people with disabilities, or first-time users? This curiosity led us to a clear opportunity: redefine self-checkout as an effortless, intuitive process for everyone. <mark>This became our north star.</mark>
+      </p>
+    </div>
+  </section>
+
+  <!-- 04 NORTH STAR SIGNALS -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">04 · North Star signals &amp; metrics</div>
+      <h2>What "effortless" had to <mark>measure</mark>.</h2>
+
+      <p class="cs-body">
+        To hold ourselves to "effortless," we tied each goal to an observable signal and a metric we could move.
+      </p>
+
+      <table class="cs-table">
+        <thead>
+          <tr><th style="width: 30%">Goal</th><th style="width: 35%">Signal</th><th style="width: 35%">Metric</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>The checkout process begins seamlessly</strong></td>
+            <td class="before">Hesitation at kiosk, user confusion</td>
+            <td>Time to first action, % needing assistance</td>
+          </tr>
+          <tr>
+            <td><strong>Barcode scanning is smooth</strong></td>
+            <td class="before">Failed scans, retry rate</td>
+            <td>Avg scan success rate, scan attempt frequency</td>
+          </tr>
+          <tr>
+            <td><strong>Bagging items is intuitive</strong></td>
+            <td class="before">Unexpected bagging alerts, staff interventions</td>
+            <td>Bagging error rate, assistance requests</td>
+          </tr>
+          <tr>
+            <td><strong>System feedback is clear and actionable</strong></td>
+            <td class="before">Pauses after errors, unsuccessful retries</td>
+            <td>Error resolution time, % resolved without help</td>
+          </tr>
+          <tr>
+            <td><strong>Payment is quick and effortless</strong></td>
+            <td class="before">Hesitation, multiple attempts</td>
+            <td>Time to complete payment, payment retry rate</td>
+          </tr>
+          <tr>
+            <td><strong>The system is accessible for all users</strong></td>
+            <td class="before">Difficulty for elderly/disabled, small UI</td>
+            <td>Accessibility score, satisfaction rating</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cs-body" style="margin-top: var(--sp-6);">
+        <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3);">The discovery: most self-checkouts require additional effort</h3>
+        <p>
+          The data revealed friction in nearly every session. Users frequently retried barcode scans, adjusted bagging placements, or sought staff help. Mistakes led to hesitation, backtracking, and trial-and-error. The experience was far from the seamless, independent process it was intended to be.
+        </p>
+
+        <h3 style="font-size: 19px; font-weight: 600; margin-top: var(--sp-6); margin-bottom: var(--sp-3);">Impact on revenue and customer experience</h3>
+        <p>
+          In high-footfall supermarkets, inefficiencies led to long queues, abandoned purchases, and frustrated customers, directly affecting sales and satisfaction. In a city like Delhi, with thousands of daily transactions, these inefficiencies caused <mark>significant weekly revenue loss</mark>, especially during peak hours.
+        </p>
+      </div>
+
+      <ul class="edge-list">
+        <li>
+          <div class="edge-head"><h4>Unclear checkout initiation</h4><span class="tag">Start</span></div>
+          <div class="edge-body">Users hesitate at the start, resorting to trial and error.</div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>Unreliable barcode scanning</h4><span class="tag">Scan</span></div>
+          <div class="edge-body">Poor placement and lighting cause repeated attempts.</div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>Disruptive bagging process</h4><span class="tag">Bag</span></div>
+          <div class="edge-body">False "item not bagged" alerts require staff help.</div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>Unclear system feedback</h4><span class="tag">Feedback</span></div>
+          <div class="edge-body">Vague errors leave users unsure how to resolve issues.</div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>Payment experience friction</h4><span class="tag">Pay</span></div>
+          <div class="edge-body">Hesitation over insert/swipe/tap; digital options unclear.</div>
+        </li>
+        <li>
+          <div class="edge-head"><h4>Lack of real-world optimization</h4><span class="tag">Context</span></div>
+          <div class="edge-body">No account for handling kids, lists, or multiple items.</div>
+        </li>
+      </ul>
+
+      <div class="cs-body" style="margin-top: var(--sp-5);">
+        <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3);">Reframing the problem</h3>
+        <p>
+          The self-checkout system, instead of simplifying, adds friction at key touchpoints: unreliable scanning, confusing bagging errors, unclear feedback. Shoppers re-scan items, adjust groceries, or call for help, slowing transactions and increasing cognitive load.
+        </p>
+      </div>
+
+      <div class="north-star">
+        <div class="label">★ Key question</div>
+        <h3>How can we create a smoother, error-free checkout that guides users intuitively?</h3>
+        <p>This led us to redesign the experience around real-world shopping behaviors: intuitive, efficient, and error-free.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 THE REDESIGN -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">05 · The redesign</div>
+      <h2>Introducing <mark>Guided Checkout</mark>.</h2>
+
+      <div class="cs-body">
+        <p>
+          Guided Checkout transforms self-checkout into a seamless, intuitive process. By reducing friction at every step, it makes smart real-time adjustments and gives clear, actionable feedback.
+        </p>
+      </div>
+
+      <figure class="gg-fig">
+        <img src="../images/gg-ui-onboarding-set-web.jpg" alt="Three Grab & Go onboarding screens: a Get Started entry point, a store locator map, and the branded splash" loading="lazy">
+        <figcaption>Onboarding into Guided Checkout: a clear entry point, store locator, and branded splash. Shopping starts with orientation, not confusion.</figcaption>
+      </figure>
+
+      <ul class="decision-list">
+        <li>
+          <div class="what">
+            <strong>"Scan, Pay, and Go: We Handle the Rest"</strong>
+            <p>The system identifies items, applies discounts, and processes payment with minimal input. Clear guidance ensures smooth bagging and a confident exit.</p>
+          </div>
+          <div class="gave-up"><strong>Principle</strong>Minimal input</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>"Always Checking Out Smarter and Faster"</strong>
+            <p>Smarter automation reduces unnecessary steps so the common path stays effortless.</p>
+          </div>
+          <div class="gave-up"><strong>Principle</strong>Fewer steps</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>"We've Got Your Back"</strong>
+            <p>On uncertainty, such as an item or pricing mismatch, it prompts for quick confirmation; the AI learns from behavior to make each checkout smoother.</p>
+          </div>
+          <div class="gave-up"><strong>Principle</strong>Adaptive trust</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>"Flexibility and the Final Say"</strong>
+            <p>Users adjust discounts, quantities, or bagging methods while keeping a seamless process.</p>
+          </div>
+          <div class="gave-up"><strong>Principle</strong>User control</div>
+        </li>
+      </ul>
+
+      <div class="gg-diagram">
+        <h3 class="gg-dia-h">Three signals that build trust</h3>
+        <div class="signals">
+          <div class="signal-card">
+            <div class="ic">Signal 01</div>
+            <h4>Scanning confirmation</h4>
+            <p>Users know the system registered their items. Every scan lands with clear, immediate feedback.</p>
+          </div>
+          <div class="signal-card">
+            <div class="ic">Signal 02</div>
+            <h4>Payment status</h4>
+            <p>Unambiguous clarity that the transaction has gone through and is complete.</p>
+          </div>
+          <div class="signal-card">
+            <div class="ic">Signal 03</div>
+            <h4>Completion signal</h4>
+            <p>Users know they can leave, with no lingering doubt about whether something is still required.</p>
+          </div>
+        </div>
+        <div class="signals-center">↑ &nbsp; The transaction process &nbsp; ↑</div>
+        <p class="exhibit-cap">Trust at checkout comes from three clear signals: did it scan, did it pay, can I go. Removing doubt at each was the difference between confidence and hesitation.</p>
+      </div>
+
+      <div class="cs-body" style="margin-top: var(--sp-6);">
+        <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3);">A more inclusive checkout experience</h3>
+        <p>
+          Traditional self-checkouts assume tech-savvy, unchallenged users. To address this, I designed for everyone, considering <mark>spectrums</mark> (temporary or permanent challenges) and <mark>situations</mark> (managing kids, rushing for a train). Moving away from one-size-fits-all, we prioritized flexibility and scalability, shifting from efficiency to inclusivity.
+        </p>
+      </div>
+
+      <div class="gg-diagram">
+        <h3 class="gg-dia-h">Designing for spectrums and situations</h3>
+        <div class="spec-sit">
+          <div class="spec-col">
+            <h4>Spectrum <span class="sub">who the user is: permanent traits</span></h4>
+            <div class="chip-grid">
+              <span class="chip">Tech literacy</span>
+              <span class="chip">Physical ability</span>
+              <span class="chip">Language proficiency</span>
+              <span class="chip">Attention span</span>
+              <span class="chip">Cognitive load</span>
+              <span class="chip">Hand mobility</span>
+              <span class="chip">Visual acuity</span>
+              <span class="chip">Hearing sensitivity</span>
+              <span class="chip">Familiarity with self-checkout</span>
+            </div>
+          </div>
+          <div class="spec-col">
+            <h4>Situation <span class="sub">what they're dealing with right now</span></h4>
+            <div class="chip-grid">
+              <span class="chip">Rushing</span>
+              <span class="chip">Hands full</span>
+              <span class="chip">Low battery</span>
+              <span class="chip">Noisy environment</span>
+              <span class="chip">Poor lighting</span>
+              <span class="chip">Unfamiliar store</span>
+              <span class="chip">With kids</span>
+              <span class="chip">Wearing gloves</span>
+              <span class="chip">Elderly user</span>
+            </div>
+          </div>
+        </div>
+        <p class="exhibit-cap">Inclusive design means designing for spectrums (who the user is) and situations (what they're dealing with right now). Both shift the experience; neither fits the "default user" myth.</p>
+      </div>
+
+      <div class="cs-body">
+        <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3);">From degradation to adaptation</h3>
+        <p>
+          I created a Hierarchy of Needs framework to move from degrading features for tough environments to building inclusive solutions from the start. Instead of "How will this degrade in tough environments?" we asked "How can we design a seamless self-checkout for all users, regardless of constraints?" This kept a high quality standard: effortless, accessible checkout from high-tech urban stores to markets with limited infrastructure.
+        </p>
+      </div>
+
+      <div class="gg-diagram">
+        <h3 class="gg-dia-h">A hierarchy of needs for self-checkout</h3>
+        <div class="pyramid">
+          <div class="pyr-tier top">
+            <div class="t">Elevating</div>
+            <div class="d">Seamless · predictive · rewarding · engaging</div>
+          </div>
+          <div class="pyr-tier mid">
+            <div class="t">Empowering</div>
+            <div class="d">Effortless · adaptive · responsive · efficient</div>
+          </div>
+          <div class="pyr-tier base">
+            <div class="t">Enabling</div>
+            <div class="d">Reliable · intuitive · accessible · transparent · secure</div>
+          </div>
+        </div>
+        <div class="pyr-labels">
+          <div class="pl">↓ Grounded: solving practical checkout inefficiencies first.</div>
+          <div class="pl right">Future forward: designing a seamless, delightful experience. ↑</div>
+        </div>
+        <p class="exhibit-cap">Rather than degrading features for hard environments, I built up from a stable base: enable first, then empower, then elevate.</p>
+      </div>
+
+      <div class="pullquote">
+        Self-checkout systems often overlook those who don't fit the "default" user profile.
+      </div>
+
+      <h3 style="font-size: 19px; font-weight: 600; margin-top: var(--sp-7); margin-bottom: var(--sp-3);">Working backwards from perfect</h3>
+      <p class="cs-body">
+        I flipped the perspective, analyzing what made existing systems frustrating. This led to four design challenges.
+      </p>
+
+      <div class="hmw-grid">
+        <div class="hmw-card">
+          <div class="n">HMW 01</div>
+          <p>How might we make starting the checkout process effortless and intuitive?</p>
+        </div>
+        <div class="hmw-card">
+          <div class="n">HMW 02</div>
+          <p>How might we minimize scanning and bagging friction to save time?</p>
+        </div>
+        <div class="hmw-card">
+          <div class="n">HMW 03</div>
+          <p>How might we reduce reliance on trial-and-error with clear, real-time guidance?</p>
+        </div>
+        <div class="hmw-card">
+          <div class="n">HMW 04</div>
+          <p>How might we design for adaptability across different behaviors, layouts, and accessibility needs?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 UNDERSTANDING INTENT -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">06 · Understanding shopper intent</div>
+      <h2>Adaptive assistance, <mark>not manual correction</mark>.</h2>
+
+      <div class="cs-body">
+        <p>
+          Self-checkout errors often arise from unclear user intent: mis-scanned items, accidental selections, confusion over feedback. Instead of manual correction, we focused on intelligent, adaptive assistance.
+        </p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">40%</div><div class="desc">Of shoppers face errors from barcode scanning issues</div></div>
+        <div class="stat"><div class="num">1 in 3</div><div class="desc">Struggle with non-barcoded item lookups</div></div>
+        <div class="stat"><div class="num">50%</div><div class="desc">Of transactions involve payment friction, causing delays</div></div>
+      </div>
+
+      <ul class="decision-list">
+        <li>
+          <div class="what">
+            <strong>Smart Item Recognition</strong>
+            <p>Reduce manual entry with camera-assisted detection.</p>
+          </div>
+          <div class="gave-up"><strong>Enhancement</strong>Scanning</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>Real-Time Feedback &amp; Correction</strong>
+            <p>Address scanning errors proactively, before they stall the shopper.</p>
+          </div>
+          <div class="gave-up"><strong>Enhancement</strong>Feedback</div>
+        </li>
+        <li>
+          <div class="what">
+            <strong>Adaptive Checkout Flow</strong>
+            <p>Adjust steps based on shopper behavior rather than a fixed sequence.</p>
+          </div>
+          <div class="gave-up"><strong>Enhancement</strong>Flow</div>
+        </li>
+      </ul>
+
+      <figure class="gg-fig">
+        <img src="../images/gg-ui-scan-and-stores-web.jpg" alt="Two Grab & Go screens: a nearby-stores map and the live scanning view recognizing Greek Yogurt with a one-tap add" loading="lazy">
+        <figcaption>Find a store, then scan to add: the core loop. Item recognition surfaces the product instantly with a single tap to add.</figcaption>
+      </figure>
+
+      <div class="gg-diagram">
+        <h3 class="gg-dia-h">From random scanning to real-time correction</h3>
+        <div class="streamline">
+          <div class="sl-step" style="background: rgba(199,90,74,0.10); border-color: rgba(199,90,74,0.30);">
+            <div class="n" style="color: var(--coral);">Step 01</div>
+            <div class="t">Random scanning</div>
+            <div class="d">Items scanned in any order, with no guidance.</div>
+          </div>
+          <div class="sl-step" style="background: rgba(199,90,74,0.07); border-color: rgba(199,90,74,0.22);">
+            <div class="n" style="color: var(--coral);">Step 02</div>
+            <div class="t">Error encounter</div>
+            <div class="d">Unreadable barcodes and mis-scans arise.</div>
+          </div>
+          <div class="sl-step" style="background: var(--surface-tint); border-color: var(--rule);">
+            <div class="n" style="color: var(--ink-muted);">Step 03</div>
+            <div class="t">Manual intervention</div>
+            <div class="d">Corrections needed, which costs the shopper time.</div>
+          </div>
+          <div class="sl-step" style="background: var(--forest-tint); border-color: var(--forest-edge);">
+            <div class="n" style="color: var(--forest);">Step 04</div>
+            <div class="t">Intelligent suggestion</div>
+            <div class="d">System suggests an optimal scanning order.</div>
+          </div>
+          <div class="sl-step" style="background: var(--forest-tint); border-color: var(--forest);">
+            <div class="n" style="color: var(--forest);">Step 05</div>
+            <div class="t">Real-time correction</div>
+            <div class="d">Errors fixed on the spot, before they stall.</div>
+          </div>
+        </div>
+        <p class="exhibit-cap">The system learns the shopper's pattern and shifts effort from manual correction to real-time, on-the-spot guidance.</p>
+      </div>
+
+      <div class="cs-body" style="margin-top: var(--sp-6);">
+        <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3);">Smart Checkout Accelerators &amp; de-risking</h3>
+        <p>
+          To optimize checkout, we focused on shopper intent. Asking "How would you like to pay?" at the right moment aligned with expectations: streamlining payment, reducing hesitation, and preloading likely options. I designed <mark>Smart Checkout Accelerators</mark>: predictive shortcuts offering 1-tap access to payment methods, bagging preferences, and receipt options.
+        </p>
+        <p>
+          To test our assumptions, we ran on-site usability sessions in Bangalore, Delhi, and Ahmedabad. To our surprise, not a single participant struggled with the adjusted flow. The scan-to-pay experience and quick payment shortcuts felt intuitive, even welcome.
+        </p>
+
+        <h3 style="font-size: 19px; font-weight: 600; margin-top: var(--sp-6); margin-bottom: var(--sp-3);">Live Scanning: adapting to real behavior</h3>
+        <p>
+          Live Scanning emerged from a simple question: "Do users really need to follow a fixed checkout flow?" Instead of a rigid step-by-step process, Live Scanning adapts in real time, surfacing the right action (payment, bagging, receipt) only when needed. This shifted our mindset from "Here's how checkout works" to "How would you like to complete your purchase?" The result: a checkout flow that's faster, and feels more personal and intelligent.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 OVER-DESIGNING FOR ANXIETY -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">07 · What I got wrong first</div>
+      <h2>Over-designing for <mark>anxiety</mark>.</h2>
+
+      <div class="cs-body">
+        <p>
+          In early phases, I believed more visibility meant more trust. So I layered in confirmations, breakdowns, and verifications to reassure users. But testing told a different story:
+        </p>
+        <ul>
+          <li>Most users didn't read the breakdowns; they assumed the system was working.</li>
+          <li>The excessive feedback slowed people down, creating friction instead of reassurance.</li>
+          <li>The anxiety we felt as designers translated into the UI, without addressing real user concerns.</li>
+        </ul>
+        <p>
+          After three test rounds, I scrapped the complexity for a simplified, balanced interface: clear, but not overwhelming. The system became <mark>more invisible</mark>, letting users move forward with confidence, not caution.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 FROM INEFFICIENT TO OPTIMIZED -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">08 · The adaptive framework</div>
+      <h2>From inefficient to <mark>optimized</mark>.</h2>
+
+      <div class="cs-body">
+        <p>
+          We built a system that adapts, automating smartly and seeking input only when necessary. Three core principles carried it.
+        </p>
+      </div>
+
+      <div class="persona-grid" style="margin-top: var(--sp-5);">
+        <div class="persona">
+          <div class="persona-badge">01</div>
+          <div>
+            <div class="role">Principle</div>
+            <h4>Confidence Score</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              The system gauges certainty for each scan. Confident? Auto-confirm. Uncertain? Prompt the user. This score improves through use.
+            </p>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">02</div>
+          <div>
+            <div class="role">Principle</div>
+            <h4>User control is sacred</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              Flexibility to opt-in, skip, or adjust, without breaking the flow.
+            </p>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-badge">03</div>
+          <div>
+            <div class="role">Principle</div>
+            <h4>Fluid, not fixed</h4>
+            <p class="muted" style="font-size: 14px; margin: 0; line-height: 1.55;">
+              The system learns over time, evolving from rigid steps to dynamic guidance based on behavior.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gg-diagram">
+        <h3 class="gg-dia-h">The confidence-score flow</h3>
+        <div class="cflow">
+          <div class="cnode">Customer starts scanning</div>
+          <div style="color: var(--ink-faint); font-family: var(--font-mono); font-size: 13px;">↓</div>
+          <div class="cnode">System checks scan accuracy</div>
+          <div class="branch-from">Branch on confidence score</div>
+          <div class="cbranch">
+            <div class="lane high">
+              <div class="lane-h">High confidence</div>
+              <div class="step">Item validated</div>
+              <div class="step">Proceed to payment</div>
+              <div class="step end">Checkout completed</div>
+            </div>
+            <div class="lane low">
+              <div class="lane-h">Low confidence</div>
+              <div class="step">Requests re-scan</div>
+              <div class="step">Smart intervention prompts assistance</div>
+              <div class="step">Rejoins the flow, never a dead stop</div>
+            </div>
+          </div>
+        </div>
+        <p class="exhibit-cap">An adaptive flow driven by a confidence score: high confidence moves silently forward; low confidence prompts a gentle, specific intervention, never a dead stop.</p>
+      </div>
+
+      <h3 style="font-size: 19px; font-weight: 600; margin-top: var(--sp-7); margin-bottom: var(--sp-3);">Giving users back their time</h3>
+      <p class="cs-body">
+        The adaptive framework had to hold up against the messy reality of a real checkout. Each context maps to a clear user action and a defined system response.
+      </p>
+
+      <table class="cs-table">
+        <thead>
+          <tr><th>Context</th><th>User action</th><th>System response</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Barcode scans successfully</strong></td><td>Scans item</td><td>Confirms and adds to cart</td><td class="before">Standard flow</td></tr>
+          <tr><td><strong>Item has no barcode</strong></td><td>Selects "No Barcode?"</td><td>Prompts manual search or scan shelf tag</td><td class="before">Alternative method</td></tr>
+          <tr><td><strong>Scanning error</strong></td><td>Scans, scanner fails</td><td>"Scanning Error" + retry</td><td class="before">Manual entry if retry fails</td></tr>
+          <tr><td><strong>Duplicate scan</strong></td><td>Scans same item twice</td><td>"Already in Cart" message</td><td class="before">Prevents duplicate charges</td></tr>
+          <tr><td><strong>Age verification</strong></td><td>Scans restricted item</td><td>Alerts to wait for associate</td><td class="before">Prevents underage purchase</td></tr>
+          <tr><td><strong>Weight-based item</strong></td><td>Selects from touchscreen</td><td>Prompts to weigh and confirm</td><td class="before">Guides weight pricing</td></tr>
+          <tr><td><strong>Bagging issue</strong></td><td>Moves item without scanning</td><td>"Item Not Scanned" alert</td><td class="before">Prevents shrinkage</td></tr>
+          <tr><td><strong>Payment failure</strong></td><td>Attempts payment</td><td>"Payment Declined" + retry</td><td class="before">Alternative payment</td></tr>
+          <tr><td><strong>Checkout complete</strong></td><td>Completes payment</td><td>"Thank You" + exit guidance</td><td class="before">Standard exit</td></tr>
+        </tbody>
+      </table>
+
+      <figure class="gg-fig">
+        <img src="../images/gg-ui-edge-cases-web.jpg" alt="Three Grab & Go edge-case screens: age verification required, a barcode scan in progress, and an item-not-recognized recovery prompt" loading="lazy">
+        <figcaption>Designing for the hard moments: age verification, scan errors, and unrecognized items each get a clear, non-punishing path forward.</figcaption>
+      </figure>
+
+      <div class="cs-body" style="margin-top: var(--sp-6);">
+        <h3 style="font-size: 19px; font-weight: 600; margin-bottom: var(--sp-3);">SmartCheckout: context-aware guidance</h3>
+        <p>
+          SmartCheckout is a dynamic guidance system mirroring how shoppers naturally interact. Using behavioral heuristics, it streamlines scanning, handles errors proactively, and simplifies payment. I modeled user behavior across real-world scenarios, revealing that intent, familiarity, and store environment heavily influence interactions. The long-term vision was a self-optimizing system adapting in real time; due to the complexity of full automation, we piloted a <mark>structured-yet-flexible</mark> version to validate key behaviors.
+        </p>
+      </div>
+
+      <a class="uimap-cta" href="grab-and-go-uimap.html">
+        <span class="cta-copy">
+          <span class="cta-title">View the full UI map &amp; annotated flow</span>
+          <span class="cta-sub">Every screen and state, from onboarding to invoice, with design rationale. Opens a dedicated full-screen page.</span>
+        </span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 09 RESULTS & IMPACT -->
+  <section class="cs-section">
+    <div class="content">
+      <div class="section-num">09 · Results &amp; impact</div>
+      <h2>SmartCheckout reduced <mark>friction</mark>.</h2>
+
+      <figure class="gg-fig">
+        <img src="../images/gg-photo-user-holding-app-web.jpg" alt="A smiling shopper holding a phone showing the Grab & Go product screen inside a real store" loading="lazy">
+        <figcaption>A real shopper using Grab & Go in-store: the moment the design left the file and met the world.</figcaption>
+      </figure>
+
+      <p class="cs-body">
+        In initial prototype tests across Bangalore, Delhi, and Ahmedabad:
+      </p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">7/10</div><div class="desc">Users completed checkout without staff assistance</div></div>
+        <div class="stat"><div class="num">12/15</div><div class="desc">Users scanned all items without re-scanning</div></div>
+        <div class="stat"><div class="num">11</div><div class="desc">Participants described payment as faster or smoother</div></div>
+        <div class="stat"><div class="num">0</div><div class="desc">Users reported confusion about the adjusted flow</div></div>
+      </div>
+
+      <h3 style="font-size: 19px; font-weight: 600; margin-top: var(--sp-7); margin-bottom: var(--sp-4);">The impact: tangible gains</h3>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="num">30–45s</div><div class="desc">Faster checkout on average</div></div>
+        <div class="stat"><div class="num">−50%</div><div class="desc">Support staff interventions in observed sessions</div></div>
+        <div class="stat"><div class="num">13/15</div><div class="desc">Users felt "more in control"; checkout anxiety decreased</div></div>
+        <div class="stat"><div class="num">15/15</div><div class="desc">Participants finished their transactions; zero abandonment</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 REFLECTION -->
+  <section class="cs-section" style="border-bottom: none;">
+    <div class="content">
+      <div class="section-num">10 · Reflection</div>
+      <h2>The honest close.</h2>
+
+      <p class="cs-body">
+        While promising, challenges like accommodating varied retail contexts and evolving user behavior remain. Continued refinement and real-world pilots will be key to SmartCheckout's success. Although still conceptual, this case study reflects a <mark>rigorous, real-world approach</mark>, from defining the problem to validating the solution.
+      </p>
+
+      <div class="pullquote">
+        We didn't set out to add features to a kiosk. We set out to make the system disappear, so the shopper could just grab, go, and trust that it worked.
+      </div>
+
+      <p class="cs-body tiny" style="margin-top: var(--sp-7);">
+        <strong>Team:</strong> Ayan Ahmad Khan (UI Design) · Budhil Raj Patel (Technical Strategy). <br>
+        <strong>My role:</strong> UX research &amp; strategy, interaction design, prototyping, accessibility, design system.
+      </p>
+    </div>
+  </section>
+
+  <section class="next-project">
+    <div class="content">
+      <a href="payment-box-pro.html">
+        <div>
+          <div class="label">Next case study</div>
+          <h3>The Single Source of Financial Truth</h3>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 Divyambari Saxena</div>
+      <div>
+        <a href="mailto:divyambariux@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/divyambari/">LinkedIn</a>
+        <a href="https://www.behance.net/divyambsaxena">Behance</a>
+        <a href="../resume.pdf">Résumé</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

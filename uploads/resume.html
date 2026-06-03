@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Résumé — Divyambari Saxena · Product Designer</title>
+  <meta name="description" content="Product designer with ~3 years of shipped work across fintech (CarDekho Financial Services) and emerging-market research (Digital Green, 1,00,000+ farmers).">
+
+  <meta property="og:title" content="Résumé — Divyambari Saxena, Product Designer">
+  <meta property="og:description" content="Three years of shipped product design across fintech systems and emerging-market research.">
+  <meta property="og:type" content="profile">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231F4A3B'/%3E%3Ctext x='16' y='22' font-family='Manrope,sans-serif' font-size='17' font-weight='600' fill='%23F0E8D8' text-anchor='middle'%3EDS%3C/text%3E%3C/svg%3E">
+
+  <style>
+    /* Resume-specific layout (page-scoped) */
+    .resume-container { max-width: 880px; margin: 0 auto; padding: 0 var(--sp-6); }
+
+    .resume-header {
+      padding: var(--sp-11) 0 var(--sp-8);
+      border-bottom: 1px solid var(--rule);
+    }
+    .resume-header h1 {
+      font-size: clamp(40px, 5.6vw, 60px);
+      letter-spacing: -0.035em;
+      margin-bottom: var(--sp-4);
+    }
+    .resume-header .lede {
+      font-size: clamp(18px, 1.9vw, 21px);
+      line-height: 1.5;
+      color: var(--ink-muted);
+      max-width: 720px;
+      margin-bottom: var(--sp-6);
+    }
+    .resume-contact {
+      display: flex; flex-wrap: wrap;
+      gap: var(--sp-5);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+    .resume-contact a { border-bottom-color: var(--rule); }
+
+    .resume-section {
+      padding: var(--sp-8) 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .resume-section:last-of-type { border-bottom: none; }
+
+    .resume-section h2 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: var(--sp-6);
+      font-weight: 500;
+    }
+
+    /* Experience entry */
+    .role {
+      padding-bottom: var(--sp-6);
+      margin-bottom: var(--sp-6);
+      border-bottom: 1px solid var(--rule);
+    }
+    .role:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .role-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--sp-4) var(--sp-5);
+      align-items: baseline;
+      margin-bottom: var(--sp-2);
+    }
+    .role-head h3 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.022em;
+      margin: 0;
+    }
+    .role-head .dates {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .role-meta {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-bottom: var(--sp-4);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .role-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .role-bullets li {
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--ink);
+      padding-left: var(--sp-5);
+      position: relative;
+      margin-bottom: var(--sp-3);
+      max-width: 800px;
+    }
+    .role-bullets li::before {
+      content: '→';
+      position: absolute; left: 0;
+      font-family: var(--font-mono);
+      color: var(--ink-faint);
+    }
+    .role-bullets strong { font-weight: 600; }
+
+    /* Highlight sub-project within role */
+    .role-bullets li.project-sub {
+      padding-left: var(--sp-6);
+      margin-left: var(--sp-3);
+      border-left: 2px solid var(--rule);
+      padding-top: var(--sp-1);
+      padding-bottom: var(--sp-1);
+    }
+    .role-bullets li.project-sub::before { content: ''; }
+    .role-bullets li.project-sub .project-name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--forest);
+      display: block;
+      margin-bottom: var(--sp-1);
+    }
+
+    /* Skills grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--sp-4) var(--sp-6);
+      max-width: 880px;
+    }
+    .skills-grid dt {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding-top: 4px;
+    }
+    .skills-grid dd {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink);
+      margin: 0;
+      padding-bottom: var(--sp-4);
+      border-bottom: 1px solid var(--rule);
+    }
+    .skills-grid dd:last-of-type,
+    .skills-grid dt:nth-last-of-type(2),
+    .skills-grid dt:last-of-type { border-bottom: 0; padding-bottom: 0; }
+    .skills-grid dd:last-of-type { border-bottom: 0; padding-bottom: 0; }
+
+    /* Education */
+    .edu-entry {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--sp-4) var(--sp-5);
+      align-items: baseline;
+    }
+    .edu-entry h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .edu-entry .dates {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+    }
+    .edu-entry .degree {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      grid-column: 1 / -1;
+      margin-top: var(--sp-1);
+    }
+
+    /* Download bar */
+    .resume-foot {
+      padding: var(--sp-7) 0 var(--sp-9);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+    .resume-foot a { color: var(--ink); }
+
+    @media (max-width: 720px) {
+      .resume-header { padding: var(--sp-8) 0 var(--sp-6); }
+      .role-head { grid-template-columns: 1fr; gap: var(--sp-1); }
+      .skills-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
+      .skills-grid dt { padding-top: var(--sp-3); }
+      .skills-grid dd { padding-bottom: var(--sp-4); border-bottom: 1px solid var(--rule); }
+      .role-bullets li { font-size: 15px; }
+    }
+
+    @media print {
+      .nav, .footer, .resume-foot { display: none; }
+      body { background: white; font-size: 10.5pt; }
+      .resume-header { padding: 0 0 var(--sp-4); }
+      .resume-section { padding: var(--sp-5) 0; page-break-inside: avoid; }
+      .role { page-break-inside: avoid; }
+      h1 { font-size: 28pt !important; }
+      .resume-header h1 { font-size: 28pt !important; }
+      mark { background: none; border-bottom: 1.5px solid currentColor; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Divyambari Saxena</a>
+      <div class="nav-links">
+        <a href="index.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="resume.html" class="active">Résumé</a>
+        <a href="mailto:divyambariux@gmail.com">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="resume-header">
+    <div class="resume-container">
+      <div class="eyebrow">Résumé · Updated May 2026</div>
+      <h1>Divyambari Saxena</h1>
+      <p class="lede">
+        Product designer (UX + Research) across <mark>fintech</mark> (lending, KYC, payments) and <mark>emerging markets</mark>. At CarDekho, designs end-to-end fintech workflows; at Digital Green, built multilingual, accessible experiences for 1,00,000+ users. Known for combining research depth with real-world scale.
+      </p>
+      <div class="resume-contact">
+        <a href="mailto:divyambariux@gmail.com">divyambariux@gmail.com</a>
+        <span>+91 95552 87377</span>
+        <a href="https://www.linkedin.com/in/divyambari/">LinkedIn ↗</a>
+        <a href="https://www.behance.net/divyambsaxena">Behance ↗</a>
+        <a href="resume.pdf">Download PDF ↓</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- EXPERIENCE -->
+  <section class="resume-section">
+    <div class="resume-container">
+      <h2>Experience</h2>
+
+      <!-- CarDekho -->
+      <div class="role">
+        <div class="role-head">
+          <h3>CarDekho Financial Services (Rupyy) — Product Designer</h3>
+          <div class="dates">June 2025 – Present · Gurugram</div>
+        </div>
+        <div class="role-meta">Fintech · Lending · Payments · B2B Admin Tools</div>
+
+        <ul class="role-bullets">
+          <li>Led end-to-end UX for <strong>5+ fintech workflows</strong> (loan journeys, payments, admin tools), delivering <strong>1,000+ screens</strong> across mobile and desktop. Applied journey mapping, task flows, and information architecture to define system logic, edge cases, and interaction patterns — reducing ambiguity during development and improving design-to-engineering handoff clarity.</li>
+
+          <li class="project-sub">
+            <span class="project-name">Payment Box Pro · Ledger System</span>
+            Designed 100+ screens across <mark>8+ transaction states</mark> using state modelling, workflow optimization, and data-informed UX. Unified five disconnected tools into one immutable, audit-ready ledger per lending case. <a href="work/payment-box-pro.html">Read case study →</a>
+          </li>
+
+          <li class="project-sub">
+            <span class="project-name">LoanBox Pro Dashboards</span>
+            Admin + Super Admin dashboards (15+ screens). State modelling and workflow optimization for high-frequency internal lending operations. Reduced operational confusion and improved task-flow efficiency.
+          </li>
+
+          <li>Built and scaled the <strong>design system</strong> — 25+ components, tokens, variants, and states across 30+ pages. Atomic principles and reusable UI patterns reduced design redundancy by <mark>~50%</mark>, improving consistency and accelerating iteration speed across teams.</li>
+
+          <li>Introduced <strong>UX research practices</strong> — heuristic evaluation, dogfooding, usability testing plans, surveys. Defined research questions, success metrics (task success, drop-offs), and validation approaches to identify friction points and inform iterative design.</li>
+
+          <li>Delivered <strong>SEO-driven discovery UX</strong> (10 brand pages, 8 blogs, 5 templates) through competitive analysis, keyword mapping, and content strategy — improving content structure, discoverability, and intent-to-action clarity.</li>
+        </ul>
+      </div>
+
+      <!-- Digital Green -->
+      <div class="role">
+        <div class="role-head">
+          <h3>Digital Green — UX Designer</h3>
+          <div class="dates">June 2023 – June 2025 · Bengaluru</div>
+        </div>
+        <div class="role-meta">AI Products · Social Impact · Emerging Markets · Field Research</div>
+
+        <ul class="role-bullets">
+          <li>Led moderated and unmoderated user research with <strong><mark>1,00,000+ smallholder farmers</mark></strong> across India and Africa — design thinking, persona development, iterative prototyping — improving digital adoption across multilingual platforms.</li>
+
+          <li>Set the appropriate context for each problem space (critical data, user quotes, market opportunities, competitive pressures) and articulated what success meant before addressing solutions. Aligned stakeholders at every phase of the project.</li>
+
+          <li>Boosted user engagement <strong>+25%</strong> by revamping UI flows and multilingual access across <strong>5+ languages</strong> via iterative user testing.</li>
+
+          <li>Spearheaded persona-driven UX for B2B solutions — <strong>WCAG-compliant, responsive interfaces</strong> tailored for low-literacy, non-digital-native users in agricultural communities — driving accessibility, usability, and long-term adoption.</li>
+
+          <li>Interacted with engineering for successful design implementation. Challenged limitations, negotiated with engineering on scope and schedule, and made the case for designs to be implemented a specific way.</li>
+
+          <li>Led content experience design for farmer apps, increasing repeat engagement <strong>+35%</strong> and enabling 1L+ users to access region-specific agri-knowledge via AI-personas.</li>
+
+          <li class="project-sub">
+            <span class="project-name">Farmer.Chat</span>
+            End-to-end UX for a multilingual <mark>voice-first AI bot</mark>. Improved platform accessibility and engagement by 25%. <a href="work/farmer-chat.html">Read case study →</a>
+          </li>
+
+          <li class="project-sub">
+            <span class="project-name">Vistaar Pilot — SaaS (B2C + B2B)</span>
+            Prototyped and tested chatbot flows. Cut onboarding by <strong>2 days</strong>, enabling real-time tracking for <strong>20,000+ farmers</strong>. Advocated for designs by putting the audience in context of business and user goals.
+          </li>
+
+          <li class="project-sub">
+            <span class="project-name">E-farm Content Tools</span>
+            Built AI-based content tools that reached <strong>1L+ farmers</strong>. Boosted knowledge recall by <mark>+28%</mark> (feedback-data measured).
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PERSONAL PROJECTS -->
+  <section class="resume-section">
+    <div class="resume-container">
+      <h2>Personal Projects</h2>
+
+      <div class="role">
+        <div class="role-head">
+          <h3>SmartCheckout — B2C Mobile-First Design</h3>
+          <div class="dates">9 months</div>
+        </div>
+        <ul class="role-bullets">
+          <li>Concept design for a self-checkout system. Built Smart Item Recognition, Adaptive Flow, and Confidence Score UI patterns. Applied accessibility (WCAG) and behavioural design to improve usability and efficiency for emerging-market shopping environments. Tools: Figma, Adobe XD, prototyping.</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="role-head">
+          <h3>Netflix Desktop Redesign</h3>
+          <div class="dates">2 months</div>
+        </div>
+        <ul class="role-bullets">
+          <li>Self-directed exploration of content discovery — mood-based filtering, responsive design, and Generative AI inputs to reduce choice paralysis. Emotionally intelligent, minimal UI flows aimed at building trust.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="resume-section">
+    <div class="resume-container">
+      <h2>Skills</h2>
+
+      <dl class="skills-grid">
+        <dt>AI in UX &amp; Product</dt>
+        <dd>AI-assisted Research Synthesis · UX Writing · Prompt Structuring · Insight Clustering · Rapid Ideation. <span class="muted">Tools: ChatGPT, Claude, Perplexity, Notion AI.</span></dd>
+
+        <dt>UX Research</dt>
+        <dd>User Interviews · Usability Testing · Mixed-Methods Research · Heuristic Evaluation · Surveys · A/B Testing</dd>
+
+        <dt>Research Planning</dt>
+        <dd>Research Design · Problem Framing · Hypothesis Definition · Success Metrics · Test Planning · Insight Prioritization</dd>
+
+        <dt>Product &amp; UX Thinking</dt>
+        <dd>Insight Generation · Journey Mapping · Persona Development · Storytelling · Product Strategy · Behavioural Design · Fintech (lending, KYC, payments)</dd>
+
+        <dt>Interaction &amp; Systems</dt>
+        <dd>User Flows · Wireframing · Prototyping · Information Architecture · Design Systems · Components · Accessibility (WCAG)</dd>
+
+        <dt>Domain &amp; Collaboration</dt>
+        <dd>B2B/B2C · SaaS · Dashboards · Workflow Optimization · Cross-functional Collaboration · Stakeholder Management</dd>
+
+        <dt>Tools</dt>
+        <dd>Figma · FigJam · Miro · Adobe XD · Sketch · Whimsical (for state machines and data models)</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="resume-section">
+    <div class="resume-container">
+      <h2>Education</h2>
+
+      <div class="edu-entry">
+        <h3>University of Lucknow — College of Arts &amp; Crafts</h3>
+        <div class="dates">May 2019 – May 2023</div>
+        <div class="degree">Bachelor of Visual Arts · Lucknow, Uttar Pradesh</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD FOOT -->
+  <section class="resume-foot">
+    <div class="resume-container" style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--sp-4);">
+      <div>Prefer to read it on paper?</div>
+      <div style="display: flex; gap: var(--sp-5);">
+        <a href="resume.pdf">↓ Download PDF</a>
+        <a href="mailto:divyambariux@gmail.com">→ Send me an email</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 Divyambari Saxena</div>
+      <div>
+        <a href="mailto:divyambariux@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/divyambari/">LinkedIn</a>
+        <a href="https://www.behance.net/divyambsaxena">Behance</a>
+        <a href="resume.pdf">Résumé (PDF)</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
